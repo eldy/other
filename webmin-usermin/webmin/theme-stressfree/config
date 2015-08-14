@@ -1,0 +1,8 @@
+cs_page=FFFFFF
+cs_table=FFFFFF
+cs_header=CCCCCC
+functions=theme.pl
+tb=class="tabheader"
+noindex=1
+texttitles=1
+nocols=3

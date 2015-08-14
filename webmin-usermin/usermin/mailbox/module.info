@@ -1,0 +1,11 @@
+desc_nl=Lees en Verzend Mail
+category=mail
+longdesc=Read, compose, forward and reply to email. Supports multiple folders, GnuPG encryption, attachments and an address book.
+os_support=solaris *-linux freebsd hpux irix macos openserver unixware openbsd aix netbsd osf1
+desc=Read Mail
+usermin=1
+desc_de=Mail bearbeiten
+depends=1.051
+version=1.051
+desc_el=Ανάγνωση Μηνυμάτων
+desc_fr=Lecture des mails

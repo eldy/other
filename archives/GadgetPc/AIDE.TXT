@@ -1,0 +1,268 @@
+
+                    ***** GadgetPC, Fichier AIDE.TXT *****
+
+
+ CE FICHIER D'AIDE PEUT ETRE CONSULTE A PARTIR DU LOGICIEL EN TAPANT ESCAPE !
+
+
+
+
+
+
+
+AIDE 01/14 - CONFIGURATION
+
+  Pour utiliser GadgetPC, il est  n‚cessaire de poss‚der un ‚cran  EGA, VGA  ou
+mieux (Couleur ou monochrome).
+  Un disque dur C: est n‚cessaire  et environ 500 Ko de libres sont requis pour
+sauvegarder les diff‚rentes donn‚es que gŠre GadgetPC..
+
+  Si vous avez install‚ un  CACHE-DISQUE en ‚criture (sur C:), votre PC retarde
+(5 secondes max) la sauvegarde des donn‚es sur le disque dur (Inconv‚nient d'un
+cache).  Si vous modifiez des options OU utilisez la proc‚dure  "END"  (Cf plus
+loin), assurez vous que tout a bien  ‚t‚ enregistr‚  avant d'‚teindre votre PC.
+
+Rem: Avec SMARTDRIVE (95% des cas) du DOS 5 ou 6,  GadgetPC version 2.9 ou plus
+     r‚soud ce problŠme.
+     Avec le DOS 6.2, 6.22 ou plus, ce d‚faut a ‚t‚ corrig‚ par Microsoft.
+
+
+
+
+
+
+AIDE 02/14 - INSTALLATION
+
+  GadgetPC  est un logiciel  qui  vous permet  de doter  votre PC de nombreuses
+fonctionnalit‚s diverses et originales.
+
+  Son  installation  se  fait  de disquette  … disque dur  grƒce  au  programme
+d'installation  fourni avec le logiciel  (Acc‚dez au r‚pertoire de la disquette
+contenant GadgetPC dans le lecteur A: et tapez INSTALL C:). GadgetPC sera copi‚
+dans un r‚pertoire nomm‚ GADGETPC et l'instruction  "gadgetpc\GadgetPC Go" sera
+rajout‚e … votre fichier AUTOEXEC.BAT  automatiquement  (Cette instruction  est
+n‚cessaire afin que le logiciel  s'active syst‚matiquement … l'allumage du PC).
+  De plus, pour pouvoir lancer la proc‚dure de fin  END (Cf plus loin) … partir
+de n'importe quel r‚pertoire du DOS,  il est conseill‚ de compl‚ter votre  PATH
+avec le r‚pertoire C:\GADGETPC.
+
+
+
+
+
+AIDE 03/14 - AU SUJET DES SONS
+
+ A partir de la version 4.0 de GadgetPC, il est possible d'ajouter des m‚mos ou
+messages sonore si l'on possŠde la carte SoundBlaster.
+ Ces sons sont des fichiers .VOC fournis avec GadgetPC ou que vous poss‚dez.
+
+ GadgetPC fait appel au driver son CT-VOICE.DRV qui est un fichier n‚cessaire …
+l'utilisation de la carte SoundBlaster.  
+
+                                 !!!!! 
+
+ A vous d'installer votre driver son (ce fichier CT-VOICE.DRV fourni avec votre
+carte son) dans le r‚pertoire C:\GADGETPC 
+  (Si vous ne l'avez pas, vous ne pouvez pas utiliser les fonctions sonores)
+
+
+
+
+AIDE 04/14 - DESINSTALLATION
+
+La d‚sinstallation, par contre, doit se faire manuellement:
+
+- Tapez EDIT … partir du DOS afin d'‚diter le fichier AUTOEXEC.BAT .
+- Supprimez alors la ligne "C:\gadgetpc\GadgetPC Go".
+- Sauvegardez le fichier AUTOEXEC.BAT modifi‚ et quittez EDIT.
+
+Le programme est alors d‚sinstall‚.
+
+Vous pouvez, ‚ventuellement, effacer le  r‚pertoire C:\GADGETPC\ et son contenu
+de votre disque dur afin de gagner quelques Koctets.
+
+
+
+
+
+
+AIDE 05/14 - MENU PRINCIPAL
+
+  Les  diff‚rentes fonctionnalit‚s  de  GadgetPC  sont accessibles par  le menu
+g‚n‚ral (en haut … gauche) grƒce aux flŠches  Haut/Bas  du clavier ou en tapant
+directement la lettre de  "raccourci"  du menu (et/ou grƒce … la souris pour la
+version 2.5 ou plus).
+
+  Trois calendriers (sur la gauche) simplifient la consultation des diff‚rentes
+options du menu. Le changement de jour s'effectue par les flŠches Gauche/Droite
+du clavier ou en cliquant le jour choisi avec la souris (pour la Version 2.5 ou
+plus).
+Rem:  Il faut se trouver sur le menu concern‚ pour pouvoir changer le jour d'un
+calendrier donn‚.
+
+           <-   Jour pr‚c‚dent             CTRL + <-   Mois pr‚c‚dent
+           ->   Jour suivant               CTRL + ->   Mois suivant
+
+
+
+
+
+
+AIDE 06/14 - MOUCHARD D'UTILISATION
+
+  Une fois install‚, GadgetPC surveille toute activit‚ de votre ordinateur. Les
+dates et heures d'utilisation de votre PC sont r‚pertori‚es dans un fichier que
+vous pouvez consulter grƒce au logiciel.
+
+  Le calendrier  ESPION  met en ‚vidence  les jours d'activit‚  de votre PC. La
+fenˆtre de messages  vous indique le  d‚tail des heures exactes auxquelles il a
+‚t‚ allum‚ ou reboot‚.
+
+  AprŠs utilisation, en tapant  "end"  juste avant d'‚teindre votre ordinateur,
+GadgetPC enregistre ‚galement les dur‚es  relatives et cumul‚es  d'utilisation,
+et r‚sume dans le BILAN diverses statistiques.
+
+
+
+
+
+AIDE 07/14 - MOT DE PASSE
+
+  Tant que le mot de passe est install‚  (8 caractŠres max),  il sera requis, …
+chaque allumage de votre PC, afin d'en autoriser l'utilisation.
+  Celui-ci peut-ˆtre enlev‚ et restaur‚ comme bon vous semble.
+
+  GadgetPC  sauvegarde ‚galement la date et l'heure de la derniŠre tentative de
+violation du mot de passe (=Mot de passe entr‚ incorrectement).
+
+
+
+
+
+
+AIDE 08/14 - MESSAGE D'ACCUEIL
+
+  Cela vous permet d'‚diter un "message d'accueil" (8 lignes maximum), c-…-d un
+message qui apparaitra, avant  tout, … la mise en route de votre PC.
+Messages de bienvenue, de menaces  ou remarques humouristiques sont de rigueur.
+
+
+
+
+
+
+
+
+
+AIDE 09/14 - AGENDA
+
+  L' AGENDA de  GadgetPC  vous permet d' utiliser votre  PC  comme un v‚ritable
+agenda actif, qui vous rappellera automatiquement vos annonces :
+Pour chaque jour de l'ann‚e, vous  pouvez  programmer des m‚mos (Anniversaires,
+rendez-vous, etc..): Placez vous sur le jour … munir de m‚mos sur le calendrier
+AGENDA puis choisissez 'Cr‚er/Editer m‚mos (‚crits)'.
+  Le calendrier AGENDA indique les jours qui en disposent.
+
+  Ces m‚mos  s'afficheront  ensuite  … l'allumage  de votre ordinateur, avec un
+delai de plusieurs jours … l'avance, que vous pouvez d‚finir entre 0 et 99 dans
+les options.  Ex: 0 jour d'avance  permet de ne voir rappeler  les m‚mos que le
+jour mˆme.
+
+  La version 4.0 propose des m‚mos sonores (fichiers.voc) qui seront jou‚ par  
+votre PC (le jour mˆme uniquement) si vous poss‚dez une carte SoundBlaster.  
+
+
+
+
+
+
+AIDE 10/14 - MESSAGERIE
+
+  La MESSAGERIE de  GadgetPC  vous permet de laisser  des messages,  destin‚s …
+d'autres utilisateurs de votre PC, transformant  votre disque dur en boites aux
+lettres.
+
+  Tout le monde  peut d‚poser du courrier  dans n'importe laquelle des 9 boites
+g‚r‚es par GadgetPC.  Cependant, pour la lecture, c'est diff‚rent :
+
+- La boite No 1 est publique, tout le monde  peut y lire  les messages d‚pos‚s.
+
+- Les boites No 2 … 9 sont priv‚es, le  courrier laiss‚  ne peut ˆtre  consult‚
+  que par les propri‚taires de ces boites,  grƒce …  un code personnel (Un code
+  par boite).  Une correspondance confidentielle peut donc ˆtre entretenue deux
+  … deux (jusque 8 utilisateurs diff‚rents).
+
+
+
+
+AIDE 11/14 - VERROUILLAGE TEMPORAIRE
+
+  Lorsque vous devrez quitter, temporairement, votre clavier, si vous ne voulez
+pas que certains ˆtres ind‚sirables  ne touchent … votre  PC  en votre absence,
+lancez  GadgetPC  … partir du  DOS  et  choisissez  le  sous-menu  VERROUILLAGE
+TEMPORAIRE.  Un mot de  d‚verrouillage  vous  sera alors demand‚  (8 caractŠres
+maximum) puis votre ordinateur sera verrouill‚, empˆchant toute utilisation par
+une autre personne.
+
+  A votre retour,  il vous  suffira de taper le mot de d‚verrouillage  pour  en
+reprendre le contr“le.
+Rem: Pendant le  verrouillage, le  d‚lai d'activation  de l'‚conomiseur d'‚cran
+est divis‚ par 3.
+
+
+
+AIDE 12/14 - OPTIONS
+
+- TYPE PRESENTATION BOOT: Deux types de pr‚sentation Boot sont disponibles:
+  Le type GADGETPC (par d‚faut) affichera une page de pr‚sentation sur laquelle
+  vous sera demand‚ le mot de passe (s'il existe), affich‚ le message d'accueil
+  rappel‚s les m‚mos et la pr‚sence de courrier.
+  Le type CLASSIQUE:  N'affiche auncune page de pr‚sentation  mais signale tout
+  sur les lignes de l'invit‚ du DOS.
+- OPTION AFFICHAGE MEMOS:  Option relative … l'Agenda de GadgetPC.  Son utilit‚
+  est expliqu‚e pr‚c‚demment.
+- OPTION AFFICHAGE COURRIER:  Valide, d‚valide le rappel au Boot de la pr‚sence
+  de courrier dans les boites aux lettres.
+- DELAI ECONOMISEUR:  GadgetPC est muni d'un  ‚conomiseur d'‚cran  qui s'active
+  automatiquement aprŠs un temps d'inactivit‚ fix‚. C'est ce d‚lai d'inactivit‚
+  que vous pouvez d‚finir comme bon vous semble (Entre 20 et 600 secondes).
+- SON: Vous permet d'activer ou neutraliser le son.
+- COULEURS: Pour modifier les couleurs de l'interface utilisateur GadgetPC.
+
+
+
+
+AIDE 13/14 - REMARQUES
+
+  GadgetPC est un logiciel distribu‚ sous le principe du Shareware.Il a souvent
+‚t‚ r‚vis‚, compl‚t‚ et am‚lior‚ :
+
+D‚cembre 1992   GadgetPC Version 1.0    Cr‚ation de la version de base
+F‚vrier  1993   GadgetPC Version 2.0   +Ajout de la messagerie
+Juillet  1993   GadgetPC Version 2.5   +Gestion de la souris
+Novembre 1993   GadgetPC Version 2.9   +Economiseur d'‚cran,bugs corrig‚s,...
+Octobre  1994   GadgetPC Version 3.1   +Mode 80x50, fˆtes, couleurs, protection
+                                         mot de passe renforc‚e...
+1995-1996       GadgetPC Version 4.0   +M‚mos parlant ou musiques.
+
+
+
+
+
+AIDE 14/14 - COPYRIGHT
+
+Faites vous enregistrer auprŠs de l'auteur (Envoyez 50 Frs, mode de paiement au
+choix), vous contribuerez au systŠme Shareware et b‚n‚ficierez automatiquement:
+ - Des versions suivantes de GadgetPC (Plus de Gadgets)
+ - De fichiers Sources (Turbo Pascal 7.0/6.0)
+ - D'une aide technique, etc...
+
+A cette fin, (ou tout simplement  pour entretenir une correspondance), l'auteur
+est … votre disposition:
+ 
+ * LAURENT DESTAILLEUR,               Vous pouvez ‚galement me joindre par
+ *                                    t‚l‚phone au 20 91 26 50       
+ * 121 Rue de la crete,                ou
+ * 59650 Villeneuve d'Ascq.           sur le serveur BBS The Lynks, accessible
+ * FRANCE                             avec tout modem (Emulation ANSI, 8-N-1)
+                                      au 20 39 78 79, … toute heure.

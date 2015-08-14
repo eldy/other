@@ -1,0 +1,7 @@
+functions=theme.pl
+headinclude=theme.css
+texttitles=1
+cs_header=7F7F7F
+cs_table=F5F5F5
+tb=class="eldy_title"
+cb=class="eldy"

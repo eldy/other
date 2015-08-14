@@ -1,0 +1,32 @@
+--------------------Configuration: UClient - Win32 Debug--------------------
+Begining build with project "D:\Dev\Divers\Winsock\UClient\UClient.dsp", at root.
+Active configuration is Win32 (x86) Application (based on Win32 (x86) Application)
+
+Project's tools are:
+			"32-bit C/C++ Compiler for 80x86" with flags "/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /FR"Debug/" /Fp"Debug/UClient.pch" /Yu"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /c "
+			"OLE Type Library Maker" with flags "/nologo /D "_DEBUG" /mktyplib203 /o NUL /win32 "
+			"Win32 Resource Compiler" with flags "/l 0x40c /fo"Debug/UClient.res" /d "_DEBUG" /d "_AFXDLL" "
+			"Browser Database Maker" with flags "/nologo /o"Debug/UClient.bsc" "
+			"COFF Linker for 80x86" with flags "/nologo /subsystem:windows /incremental:yes /pdb:"Debug/UClient.pdb" /debug /machine:I386 /out:"Debug/UClient.exe" /pdbtype:sept "
+			"Custom Build" with flags ""
+			"<Component 0xa>" with flags ""
+
+Creating temp file "C:\TMP\RSP8B.tmp" with contents </nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /FR"Debug/" /Fp"Debug/UClient.pch" /Yu"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /c 
+"D:\Dev\Divers\Winsock\UClient\About.cpp"
+"D:\Dev\Divers\Winsock\UClient\UClient.cpp"
+"D:\Dev\Divers\Winsock\UClient\UClientDlg.cpp"
+>
+Creating command line "cl.exe @C:\TMP\RSP8B.tmp" 
+Compiling...
+About.cpp
+UClient.cpp
+UClientDlg.cpp
+Generating Code...
+Creating command line "link.exe /nologo /subsystem:windows /incremental:yes /pdb:"Debug/UClient.pdb" /debug /machine:I386 /out:"Debug/UClient.exe" /pdbtype:sept  .\Debug\About.obj .\Debug\StdAfx.obj .\Debug\UClient.obj .\Debug\UClientDlg.obj .\Debug\UClient.res" 
+Linking...
+Creating command line "bscmake.exe /nologo /o"Debug/UClient.bsc"  .\Debug\StdAfx.sbr .\Debug\About.sbr .\Debug\UClient.sbr .\Debug\UClientDlg.sbr" 
+Creating browse info file...
+
+
+
+UClient.exe - 0 error(s), 0 warning(s)

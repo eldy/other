@@ -1,0 +1,15 @@
+! ** JCreator Workspace File (C)2000
+! ********** DO NOT EDIT *********
+
+VERSION := "1.00"
+LABEL := "Clock"
+
+! Start Project Structure
+#[BeginProject]SOURCE := "\\Clock.jcp" #[EndProject]
+
+! Start Last Document Structure
+#[BeginFile]SOURCE := "\\pagejava.htm" #[EndFile]
+#[BeginFile]SOURCE := "\\clock.java" #[EndFile]
+
+! Start Breakpoint Structure
+

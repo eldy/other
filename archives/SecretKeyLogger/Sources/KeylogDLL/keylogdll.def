@@ -1,0 +1,13 @@
+
+HEAPSIZE    1024
+STACKSIZE   4096
+
+CODE      PRELOAD MOVEABLE DISCARDABLE
+DATA      PRELOAD
+
+
+EXPORTS
+	 KeylogOn
+	 KeylogOff
+	 GetData
+	 KeylogOpt

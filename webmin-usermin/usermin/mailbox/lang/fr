@@ -1,0 +1,464 @@
+index_title=Configuration de Sendmail
+index_econfig=Le fichier de configuration de Sendmail '$1' n'existe pas.  Peut-être que la <a href='$2'>configuration du module</a> est incorrecte.
+index_eversion=Votre fichier de configuration de Sendmail ne semble pas être de la dernière version.  Webmin supporte seulement les versions 8.8 et supérieur.
+index_epath=L'exécutable Sendmail '$1' n'est pas installé sur votre système.  Peut-être votre <a href='$2'>configuration de module</a> est incorrrect ou Sendmail n'est pas installé.
+index_return=configuration de sendmail
+index_stop=Arrêter Sendmail
+index_stopmsg=Appuyer sur ce bouton pour arrêter le processus de Sendmail.  Ceci va arrêter le service de livraison de courrier aux usagers des autres systèmes et prévenir ceux de ce système d'en envoyer.
+index_start=Démarrer Sendmail
+index_startmsg=Cliquer sur ce bouton démarrera Sendmail avec la commande '$1'.  Jusqu'à ce que cela soit fait, les courriers des usagers locaux ne pourront plus être envoyer et ce système fermer le service de courrier.
+index_version2=Sendmail version $1, configuration $2
+index_xversion=Sendmail version $1
+index_version=Sendmail configuration $1
+
+opts_title=Options Sendmail
+opts_ecannot=Vous n'êtes pas autorisé à éditer les options de Sendmail.
+opts_ds=Envoie des courrier sortant par l'hôte
+opts_direct=Livrer directement
+opts_dr=Diriger les noms d'usager non qualifié vers l'hôte
+opts_dh=Diriger les courrier des usagers locaux vers l'hôte
+opts_local=Livrer localement
+opts_queuela=Charge maximale pour la livraison
+opts_refusela=Charge maximale pour la réception
+opts_maxch=Nombre de sous-processus maximum
+opts_throttle=Nombre de connexions par secondes maximums
+opts_minqueueage=Temps minimum avant de réessayer d'envoyer
+opts_runsize=Taille maximum de la file d'attente
+opts_queuereturn=Temps d'attente avant d'abandonner
+opts_queuewarn=temps d'attente avant d'envoyer un avertissement
+opts_queue=Répertoire de file d'attente
+opts_postmaster=Envoyer les messages d'erreur à
+opts_forward=Fichier d'envoi d'usager
+opts_minfree=Espace disque minimum
+opts_maxmessage=Taille maximum des messages
+opts_loglevel=Niveau d'audit
+opts_mimebounce=Rebond de messages encoder par MIME?
+opts_default=Défaut
+opts_save=Enregistrer et Appliquer
+opts_err=Impossible d'enregistrer les options
+opts_ehost=$1 n'est pas un hôte ou nom de domaine valide
+opts_einvalid=$1 n'est pas une valeur valide pour $2
+opts_blame=Options sécurité fichier
+opts_selected=Selectionné..
+opts_blocks=blocks
+opts_bytes=bytes
+opts_dmode=Mode d'envoi
+opts_background=Fond
+opts_queue-only=Queue seulement
+opts_interactive=Interactif
+opts_deferred=Reporté
+opts_gecos=Accepter les mails pour le nom réel des utilisateur?
+opts_hops=Nombre de hop maximum
+opts_daemon=Options port SMTP
+
+aliases_title=Alias de Mails
+aliases_ecannot=Vous n'êtes pas autorisé à éditer les alias
+aliases_enofile=Aucun fichier d'alias n'a été défini dans votre configuration SendMail/Postfix
+aliases_addr=Adresse
+aliases_to=Alias vers
+aliases_type1=Adresse $1
+aliases_type2=Adresses dans un fichier $1
+aliases_type3=Fichier $1
+aliases_type4=Programme $1
+aliases_type5=Fichier de réponse automatique $1
+aliases_type6=Appliquer le fichier filtre $1
+aliases_none=Aucun
+aliases_return=liste d'alias
+aliases_toomany=Il y a trop d'alias de mail sur votre systeme pour permettre l'affichage sur cette page.
+aliases_go=Critère de recherche d'alias:
+
+aform_ecannot=Vous n'êtes pas autorisé à éditer cet alias
+aform_type0=Aucun
+aform_type1=Adresse courrier
+aform_type2=Adresses dans un fichier
+aform_type3=Écrire dans un fichier
+aform_type4=Fournir à un programme
+aform_type5=Fichier réponse automatique
+aform_type6=Appliquer le fichier filtre
+aform_edit=Éditer un Alias
+aform_create=Créer un Alias
+aform_name=Adresse
+aform_enabled=Activé?
+aform_val=Alias vers
+aform_afile=Editer..
+aform_return=alias
+
+afile_title=Editer fichier Adresse
+afile_desc=Utilisez la zone texte ci-dessous pour éditer les adresses du fichier $1.
+afile_efile=Vous n'êtes pas autorisé à éditer $1.
+afile_undo=Annuler changements
+afile_ewrite=Echec de la sauvegarde du fichier adresses : $1
+
+asave_err=Impossible d'enregistrer l'alias
+asave_ecannot2=Vous n'êtes pas autorisé à éditer les alias
+asave_ecannot=Vous n'êtes pas autorisé à éditer cet alias
+asave_emax=Vous n'êtes pas autorisé à créer plus qu'$1 alias
+asave_eaddr=$1 n'est pas une adresse valide
+asave_ealready=Un alias pour $1 existe déjà
+asave_ematch=Vous n'êtes pas autorisé à créer un alias correspondant pour $1
+asave_etype=Vous n'êtes pas autorisé créer un alias de ce type
+asave_etype1=$1 n'est pas une adresse courrier valide
+asave_etype2=Le fichier d'adresses '$1' n'existe pas
+asave_etype3='$1' n'est pas un nom de fichier valide
+asave_etype4='$1' n'est pas un programme ou n'existe pas
+asave_etype4none=Aucun programme spécifié
+
+cws_title=Domaines Locaux
+cws_ecannot=Vous n'êtes pas autorisé à éditer les domaines locaux
+cws_domains=Domaines pris en main par ce serveur
+cws_desc1=En dehors des courrier pour $1, Sendmail va seulement accepter les courrier local des domaines et noms d'hôtes listés à gauche.  Si vous voulez que votre serveur de courrier supporte les domaines multiples, ils doivent être listés.
+cws_desc2=Noté qu'inclure le domaine dans la liste n'est pas assez, vous devez aussi vous assurer qu'il possède un enregistrement DNS qui pointe sur votre système.
+cws_err=Impossible d'enregistrer les domaines locaux
+cws_ehost=$1 n'est pas un hôte ou un domaine valide
+cws_eip=$1 est une adresse IP, non un domaine
+
+masq_title=Camouflage de Domaine
+masq_ecannot=Vous n'êtes pas autorisé à configurer le camouflage
+masq_domain=Camoufler comme domaine
+masq_domains=Domaines à camoufler
+masq_desc1=Si un domaine est listé si dessus, Sendmail va modifier la provenance de tout les courrier sortant pour les faire apparaître comme venant de ce domaine.  De plus, tout courrier passant au travers de votre système d'un des hôtes ou domaine listé à gauche vont aussi avoir leur provenance modifiée de la même façon.  Noté que tout camouflage défini ici peut être écraser pour des usagers spécifiques dans la page <a href='$1'>Adresses Sortante</a>.
+masq_desc2=Cette option peut être utile si vous voulez que les courriers sortant de votre système apparaisse comme le nom de domaine et non le nom d'hôte ou si votre système est utilisé comme hub de courrier d'autre hôte exécutant leur propre serveur de courrier.
+masq_err=Impossible d'enregistrer le camouflage de domaine
+masq_edomain=$1 n'est pas un domaine valide pour camoufler
+masq_ehost=$1 n'est pas un hôte ou un nom de domaine valide
+masq_eip=$1 est une adresse IP et non un domaine
+
+trusts_title=Usagers Confiants
+trusts_ecannot=Vous n'êtes pas autorisé à éditer les usagers confiant
+trusts_users=Usagers locaux dont Sendmail fait confiance
+trusts_desc=Si un usager local est dans la liste à gauche et il tente d'envoyer un courrier, Sendmail va accepter seulement qu'il spécifie une provenance d'adresse différente.  Cette restriction existe pour prévenir les usagers de forgé des courriers avec de fausse provenance que celle de votre système.
+trusts_err=Impossible de sauver les usagers confiants
+trusts_euser=$1 n'est pas un usager valide
+
+virtusers_title=Association d'Adresses
+virtusers_ecannot=Vous n'êtes pas autorisé à éditer une association d'adresses
+virtusers_edirective=Votre configuration de Sendmail n'a pas les directives nécessaires pour les associations d'adresses
+virtusers_efile=Le fichier texte '$1' à partir duquel est tirée la base de donnée $2 des associations d'adresses n'existe pas.  Peut-être que vous devriez modifier la <a href='$3'>configuration du module</a> et choisir le chemin correct
+virtusers_desc1=Les associations d'adresses sont semblables aux <a href='$1'>alias</a>, mais sont préférable pour un système qui gère des domaines de courrier multiple.  Ils peuvent être utilisés pour rediriger les courriers d'un domaine entier à une adresse, gérer les usagers avec la même adresse dans plusieurs domaines, ou de gérer les courrier d'un domaine à un autre.
+virtusers_desc2=Noter que vous devez avoir une entrée dans la table <a href='$1'>domaines locaux</a> de tous les domaines utilisés dans les associations d'adresses et ils doivent avoir une section MX dans l'enregistrement DNS de chaque domaine pointant sur votre système.
+virtusers_for=Courrier pour
+virtusers_to=Envoyer à
+virtusers_error=Erreur $1
+virtusers_domain=Domaine $1
+virtusers_address=Adresse $1
+virtusers_return=liste d'associations d'adresses
+
+vform_edit=Éditer Association
+vform_create=Créer Association
+vform_for=Courrier pour
+vform_address=Adresse
+vform_domain=Domaine
+vform_to=Envoyer à
+vform_msg=message
+vform_error=Retourner erreur
+vform_end=Deplacer à la fin
+vform_ecannot=Vous n'êtes pas autorisé à éditer cette association d'adresses
+
+vsave_ecannot=Vous n'êtes pas autorisé à éditer une association d'adresses
+vsave_ecannot2=Vous n'êtes pas autorisé à éditer cette association d'adresses
+vsave_emax=Vous n'êtes pas autorisé à créer plus que $1 associations d'adresses
+vsave_err=Impossible d'enregistrer l'association d'adresses
+vsave_efrom=$1 n'est pas une adresse valide
+vsave_efromdup=Une association d'adresses pour $1 existe déjà
+vsave_edom=$1 n'est pas un domaine valide
+vsave_edomdup=Une association d'adresses pour $1 existe déjà
+vsave_ematch=L'adresse source ne correspond pas à $1
+vsave_ecannot3=Vous n'êtes pas autorisé à créer une association d'adresse
+vsave_eaddr=$1 n'est pas une adresse valide
+vsave_ecannot4=Vous n'êtes pas autorisé à créer une association d'adresses pour un domaine
+vsave_edomdom=Seulement un domaine peut être associé à un autre domaine
+vsave_ecannot5=Vous n'êtes pas autorisé à créer une association qui retourne une erreur
+
+mailers_title=Routage de Domaine
+mailers_cannot=Vous n'êtes pas autorisé d'éditer un routage de domaine
+mailers_edirective=Votre configuration de Sendmail n'a pas les directives nécessaires au routage de domaine.
+mailers_efile=Le fichier texte '$1' duquel la base de donnée de routage de domaine $2 est tirée n'existe pas.  Peut-être vous avez besoin de modifier la <a href='$3'>configuration du module</a> pour utiliser les chemins corrects.
+mailers_desc1=Le routage de domaine est une façon de définir une méthode de transfert de courrier pour certains domaines.  Ceci peut être utile si votre système est une passerelle pour un serveur de courrier qui ne peut être accessible de l'extérieur du réseau, ou si vous voulez forcer chacun des courriers, pour une raison particulière, à être dirigé vers d'autres serveurs.
+mailers_desc2=Vous ne devriez <b>pas</b> avoir une entrée dans la liste des <a href='$1'>domaines locaux</a> pour tout domaine routé. Sinon, vous devez avoir le champ MX dans vos enregistrements DNS qui passe par votre passerelle.
+mailers_for=Courrier pour
+mailers_delivery=Livraison
+mailers_to=Envoyé à
+mailers_return=liste de routage de domaine
+
+mform_edit=Éditer un Routage
+mform_create=Créer un Routage
+mform_for=Courrier pour
+mform_host=Hôte
+mform_domain=Domaine
+mform_delivery=Livraison
+mform_to=Envoyer à
+mform_ignore=Ignorer le champ DNS MX pour la livraison SMTP
+mform_smtp=SMTP
+mform_esmtp=SMTP Étendu
+mform_smtp8=SMTP 8-bit
+mform_relay=Relais SMTP
+mform_local=Usager local
+mform_prog=Fournir au programme
+mform_uucp=UUUCp
+mform_usenet=Envoyer à USENET
+mform_fax=HylaFAX
+mform_pop=POP3
+mform_procmail=Procmail
+mform_mail11=Courrier DECnet
+mform_error=Erreur
+mform_ecannot=Vous n'êtes pas autorisé à éditer un routage de domaine
+
+msave_ecannot=Vous n'êtes pas autorisé à éditer un routage de domaine
+msave_err=Impossible d'enregistrer le routage de domaine
+msave_edomain='$1' n'est pas un hôte ou un domaine valide
+msave_edup=Un routage de domaine pour '$1' existe déjà
+
+generics_title=Adresses Sortante
+generics_cannot=Vous n'êtes pas autorisé à éditer une adresse sortante
+generics_econfig=Votre fichier de configuration de Sendmail ne semble pas avoir les directives nécessaires pour des plans des adresses sortantes
+generics_efile=Le fichier texte '$1' duquel la base de donnée d'adresse sortante $2 est tirée n'existe pas.  Peut-être avez-vous besoin de modifier la <a href='$3'>configuration du module</a> pour utiliser le chemin correct.
+generics_desc1=Les plans d'adresse sortante vous permet de modifier la provenance des courrier envoyé en dehors de votre système, ou au travers de votre système d'un autre hôte à votre réseau local.  Ceci peut être utile si vous avec des domaines multiples sur un système et que vous voulez que les courriers de quelques usagers apparaissent comme venant d'un domaine différent.
+generics_desc2=Notez que vous devez avoir une entrée dans la table <a href='$1'>domaines sortant</a> pour chaque domaine que vous voulez que des adresses aient les plans d'appliqués.
+generics_from=Courrier de
+generics_to=Changer pour
+generics_return=liste de plans d'adresse
+
+gform_edit=Éditer un Plan
+gform_create=Créer un Plan
+gform_from=Courrier de
+gform_to=Changer pour
+gform_ecannot=Vous n'êtes pas autorisé à éditer cette adresse sortante
+
+gsave_ecannot=Vous n'êtes pas autorisé à éditer une adresse sortante
+gsave_ecannot2=Vous n'êtes pas autorisé à éditer cette adresse sortante
+gsave_err=Impossible d'enregistrer l'adresse sortante
+gsave_efrom=$1 n'est pas une adresse valide
+gsave_ematch=Cette forme d'adresse ne correspond pas à $1
+gsave_eto=$1 n'est pas une nouvelle adresse valide
+
+cgs_title=Domaines Sortant
+cgs_ecannot=Vous n'êtes pas autorisé à éditer un domaine sortant
+cgs_header=Adresse de domaines sortant
+cgs_desc=Indépendamment du courrier envoyé par les utilisateurs locaux, Sendmail exécutera seulement le plan de l'<a href='$1'>adresse sortante</a> pour le courrier des hôtes ou domaines listés dans la boîte de texte à la droite.  Ainsi, pour qu'une entrée d'adresse sortante fonctionne, le domaine doit être inclut dans la liste.
+cgs_err=Impossible d'enregistrer les domaines sortant
+cgs_ehost=$1 n'est pas un hôte ou un nom de domaine valide
+cgs_eip=$1 est une adresse IP, non un domaine
+
+domains_title=Plans de Domaine
+domains_ecannot=Vous n'êtes pas autorisé à éditer un plan de domaine
+domains_econfig=Votre fichier de configuration de Sendmail n'a pas les directives nécessaires pour les plans de domaine.
+domains_efile=Le fichier texte '$1' duquel la base de donnée $2 est tirée n'existe pas.  Peut-être avez-vous besoin de modifier la <a href='$3'>configuration du module</a> pour utiliser le chemin correct.
+domains_desc=Les plans de domaine modifie l'adresse de destination des courriers envoyé de, relayé ou livré à votre système.  L'adresse de provenance du message relayé ou du message à l'usager local est aussi modifiée.  Ceci peut être utile si vos noms de domaines changent et que vous voulez changer toutes les occurrences de votre vieux domaine au nouveau.
+domains_from=Du domaine
+domains_to=Au domaine
+domains_return=liste de plans de domaine
+
+dform_edit=Éditer un Plan
+dform_create=Créer un Plan
+dform_from=Du domaine
+dform_to=Au domaine
+dform_ecannot=Vous n'êtes pas autorisé à éditer un plan de domaine
+
+dsave_ecannot=Vous n'êtes pas autorisé à éditer un plan de domaine
+dsave_err=Impossible d'enregistrer le plan de domaine
+dsave_edomain=$1 n'est pas un nom domaine valide
+
+access_title=Contrôle du Spam
+access_ecannot=Vous n'êtes pas autorisé à configurer le contrôle du spam
+access_econfig=Votre fichier de configuration n'a pas les directives nécessaires pour le contrôle du spam.
+access_efile=Le fichier texte '$1' duquel la base de donnée $2 est tirée n'existe pas.  Peut-être avez-vous besoin de modifier la <a href='$3'>configuration du module</a> pour utiliser le chemin correct.
+access_desc1=La fonction de contrôle du spam de Sendmail vous permet de prévenir le pollupostage d'atteindre vos usagers en rejetant les courriers de certaines adresses et en prévenant les spammeurs d'utiliser votre système pour rediriger leurs courriers.  Par défaut Sendmail accepte tout les courriers des usagers interne, mais empêche tout client ou serveur de courrier de passer par votre système.  Généralement, vous devriez ajouter des règles de contrôle de spam pour rejeter les courriers des spammeurs, et des règles pour autoriser d'autres machines sur votre réseau de diriger leurs courriers au travers de votre système.
+access_desc2=Noter que, par défaut, Sendmail accepte les clients roulant sur votre système d'envoyer des courriers  par SMTP à n'importe quelle destination.  Alors, il n'y a aucun besoin d'ajouter le réseau <tt>127.0.0</tt> à la liste de ceux qui sont autorisé.
+access_source=Source
+access_action=Action
+access_return=liste de contrôle de spam
+
+sform_edit=Éditer une Règle de Contrôle de Spam
+sform_create=Créer une Règle de Contrôle de Spam
+sform_source=Source du courrier
+sform_type0=Adresse Courrier
+sform_type1=Réseau
+sform_type2=Usager
+sform_type3=Domaine
+sform_action=Action
+sform_ok=Accepter
+sform_relay=Autorisé la redirection
+sform_reject=Rejeter
+sform_discard=Supprimer discrètement
+sform_err=Code d'erreur
+sform_msg=Message
+sform_ecannot=Vous n'êtes pas autorisé à configurer le contrôle de spam
+
+ssave_ecannot=Vous n'êtes pas autorisé à configurer le contrôle du spam
+ssave_err=Impossible d'enregistrer la règle de contrôle de spam
+ssave_etype0=$1 n'est pas une adresse valide
+ssave_etype1=$1 n'est pas un réseau valide
+ssave_etype2=$1 n'est pas un nom d'usager valide
+ssave_etype3=$1 n'est pas un domaine valide
+ssave_ecode=$1 n'est pas un code d'erreur SMTP valide
+
+relay_title=Relayer les Domaines
+relay_ecannot=Vous n'êtes pas autorisé à éditer les relais de domaines
+relay_eversion=Seulement Sendmail 8.9 ou plus récent supporte la fonction de relais.
+relay_domains=Domaines que le relayage est autorisé
+relay_desc1=Tant que ce n'est pas autorisé par les règles de <a href='$1'>contrôle de spam</a>, Sendmail permet seulement au domaines listés ci-dessous de relayer par votre système.  Les courriers entrant qui ne sont pas pour un usager local et non pour un des domaines listés seront rejeté.
+relay_desc2=Si votre système sert de passerelle à plusieurs domaines qui ne sont pas directement accessible à l'extérieur de votre réseau (en utilisant la fonction <a href='$1'>routage de domaine</a>) ces domaines doivent être listés ci-dessous.
+relay_err=Impossible d'enregistrer les domaines relayés
+relay_edomain=$1 n'est pas un nom de domaine valide
+
+mailq_title=File d'Attente de Courrier
+mailq_ecannot=Vous n'êtes pas autorisé à voir la file d'attente de courrier
+mailq_id=Numéro de courrier
+mailq_sent=Envoyé
+mailq_from=De
+mailq_to=À
+mailq_status=État
+mailq_unknown=Inconnu
+mailq_sending=Envoie
+mailq_dmsg=Pour voir un courrier de la file d'attente, cliquer sur son numéro dans la liste ci-dessus
+mailq_force=Pour forcer la livraison immédiate d'un courrier de la file, <<a href='$1'>cliquer ici</a>.
+mailq_none=Aucun courrier est présentement dans la file d'attente
+mailq_return=file d'attente de courrier
+
+flushq_title=Vider la File d'Attente
+flushq_desc=Forcer la livraison des courriers avec la commande '$1'
+
+delq_err=Impossible de supprimer le courrier de la file d'attente
+delq_ecannot=Vous n'êtes pas autorisé à supprimer un courrier de la file d'attente
+delq_locked=Verrouiller pour l'instant pour l'envoie
+
+boxes_title=Boîtes à Lettre des Usagers
+boxes_user=Usagers
+boxes_size=Taille de la boîte aux lettres
+boxes_none=Aucun courrier
+boxes_return=boîtes aux lettres des usagers
+boxes_ecannot=Vous n'êtes pas autorisé à lire les courriers des usagers
+
+mail_title=Mails de l'utilisateur
+mail_from=De
+mail_date=Date
+mail_subject=Sujet
+mail_to=À
+mail_cc=Copie carbone
+mail_bcc=Bcc
+mail_pri=Priorité
+mail_highest=La plus haute
+mail_high=Haute
+mail_normal=Normale
+mail_low=Faible
+mail_lowest=La plus basse
+mail_for=Dans $1
+mail_for2=Pour l'utilisateur $1
+mail_sent=Dans la liste Mails envoyés
+mail_size=Taille
+mail_delete=Supprimer les messages sélectionnés
+mail_compose=Écrire un nouveau courrier
+mail_return=courrier de l'usager
+mail_pos=Courriers $1 à $2 de $3
+mail_none=Cette boîte aux lettres n'a aucun courrier
+mail_ecannot=Vous n'êtes pas autorisé à lire les courriers des usagers
+mail_all=Selectionner tout
+mail_invert=Selectioner l'inverse
+mail_search=Trouver les messages pour
+mail_body=Corps
+mail_match=répond au critère
+mail_ok=Recherche
+mail_nonefrom=Aucun
+mail_mark=Marqué comme:
+mail_mark0=Non lus
+mail_mark1=Lus
+mail_mark2=Special
+mail_forward=Transférer
+mail_move=Déplacer vers:
+mail_rfc=Depuis la ligne
+
+view_title=Lire un Courrier
+view_desc=Courrier $1 dans $2
+view_qdesc=Courrier $1 de la file d'attente
+view_headers=Entêtes du courrier
+view_attach=Attachements
+view_reply=Répondre
+view_reply2=Répondre à tous
+view_forward=Renvoyer
+view_delete=Supprimer
+view_ecannot=Vous n'êtes pas autorisé à lire les courriers des usagers
+
+compose_title=Écrire un Courrier
+reply_title=Répondre au Courrier
+forward_title=Rediriger un Courrier
+reply_headers=Entêtes du courrier
+reply_attach=Attachement envoyé
+reply_attach2=Attachements
+reply_send=Envoyer
+reply_ecannot=Vous n'êtes pas autorisé à envoyer un courrier de cet usager
+
+send_err=Impossible d'envoyer le courrier
+send_eto=Adresse du destinataire manquante
+send_efrom=Adresse de l'émetteur manquant
+send_title=Courrier Envoyé
+send_ok=Courrier envoyé avec succès à $1
+send_ecannot=Vous n'êtes pas autorisé à envoyer un courrier de cet usager
+send_esmtp=Impossible d'exécuter la commande SMTP $1 : $2
+
+delete_ecannot=Vous n'êtes pas autorisé à supprimer les courriers de cet usager
+
+search_title=Résultats recherche
+search_ecannot=Vous n'êtes pas autorisé à chercher les emails de cet utilisateur
+search_ematch=Vous devez entrer le texte servant de critère.
+search_efield=Vous devez sélectionner un type de recherche.
+search_none=Aucun message trouvé.
+search_results2=$1 mail répondant aux critères $2 ..
+search_results3=$1 mail ne répondant pas aux critères $2 ..
+
+acl_opts=Peut éditer les options de Sendmail?
+acl_cws=Peut éditer les domaines local?
+acl_masq=Peut configurer le camouflage de domaine?
+acl_trusts=Peut éditer les usagers confiants?
+acl_cgs=Peut éditer les domaines sortants?
+acl_relay=Peut éditer le relayage de domaines?
+acl_mailers=Peut configurer le routage de domaine?
+acl_access=Peut configurer le contrôle de spam?
+acl_domains=Peut configurer les plans de domaines?
+acl_stop=Peut arrêter et démarrer Sendmail?
+acl_mailq=Peut gérer la file d'attente des courriers?
+acl_viewdel=Voir et supprimer
+acl_view=Voir seulement
+acl_virtusers=Plans d'adresse que cet usager peut éditer
+acl_none=Aucun
+acl_all=Tous
+acl_matching=Correspondant
+acl_vtypes=Types de plan d'adresse que cet usager peut éditer
+acl_vtype0=Erreur de retour
+acl_vtype1=Au domaine
+acl_vtype2=À l'adresse
+acl_vmax=Nombre maximum de plans d'adresse
+acl_unlimited=Illimité
+acl_aliases=Alias que cet usager peut éditer
+acl_atypes=Types d'alias que cet usager peut éditer
+acl_atype1=Adresse courrier
+acl_atype2=Adresse dans fichier
+acl_atype3=Écrire dans un fichier
+acl_atype4=Donner à un programme
+acl_amax=Nombre maximum d'alias
+acl_outgoing=Adresses sortantes que cet usager peut éditer
+acl_read=Usagers dont les courriers peuvent être lu
+acl_users=Seulement les usagers
+acl_userse=Tous
+acl_from=Des adresses
+acl_any=De toutes les adresses
+acl_fdoms=Boîte aux lettres des domaines
+acl_faddrs=Adresses listées
+acl_fdom=Toutes les adresses d'un domaines
+
+match_from=Emetteur: contient
+match_subject=Sujet: contient
+match_to=Destinataire: contient
+match_cc=Cc: contient
+match_date=Date: contient
+match_body=Corps: contient
+match_size=Taille: est plus grande que
+match_headers=En-tête: contient
+match_=-----------------
+match_!from=Emetteur: ne contient pas
+match_!subject=Sujet: ne contient pas
+match_!to=Destinataire: ne contient pas
+match_!cc=Cc: ne contient pas
+match_!date=Date: ne contient pas
+match_!body=Corps: ne contient pas
+match_!size=Taille: est plut petite que
+match_!headers=En-tête: ne contient pas

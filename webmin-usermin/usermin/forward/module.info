@@ -1,0 +1,13 @@
+desc_nl=E-mail Doorsturen
+category=mail
+longdesc=Edit the .forward or .qmail-* files that control what happens to email sent to your account.
+desc=Mail Forwarding
+desc_es=Reenvio de Correo
+usermin=1
+desc_de=Mailweiterleitung
+desc_ja_JP.euc=₯α‘Ό₯λ ΕΎΑχ
+depends=mailbox 1.051
+version=1.051
+desc_el=Προώθηση Ηλεκτρονικού Ταχυδρομείου
+desc_fr=Redirection Mails
+longdesc_fr=L'ιdition des fichiers .forward ou .qmail-* controles ce qui se passe (transfert, rιponses automatiques, etc...) quand vous recevez un mail pour votre compte.

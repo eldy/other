@@ -1,0 +1,6 @@
+name=squirrelmail
+category=mail
+desc=Read mails (Squirrelmail)
+desc_fr=Lecture des mails (Squirrelmail)
+usermin=1
+long_desc=This module allows you to replace the "Read Mail" Webmin module by Squirrelmail. It adds a link in Webmin menu to your Squirrelmail home. You can then, if you want, disable the "Read Mail" module (to avoid having two "Read Mail" entries in Webmin menu)

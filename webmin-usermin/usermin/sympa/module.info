@@ -1,0 +1,6 @@
+name=sympa
+category=mail
+desc=Admin Mailling lists (Sympa)
+desc_fr=Admin Mailings lists (Sympa)
+usermin=1
+long_desc=This module allows you to add a link to the "Sympa" mailings list manager inside the Usermin panel.

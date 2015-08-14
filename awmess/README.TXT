@@ -1,0 +1,71 @@
+;-------------------------------------------------------------
+; CONF FILE
+;-------------------------------------------------------------
+; You can specify special parameters and use advanced functions
+; by creating an ini file with the following content in the
+; same directory than the binary to execute
+
+[Config]
+; Uncomment this if POP3 server is not on default port (110)
+;PortPOP=110
+; Default pop3 server if not specified
+;Host=mail.mailserver.com
+
+; Change this if SMTP server is not on default port (25)
+;PortSMTP=25
+; Default SMTP server if not specified
+;Host=smtp.wanadoo.fr
+; Default subject if not specified
+;Subject=
+; Default return EMail address if not specified
+: To reply to a fix address:
+;Return Path=myname@mailserver.com
+; To reply to user defined in REMOTE_USER environnement variable (for use by CGI in HTML authenticated pages)
+;Return Path=REMOTE_USER@mailserver.com        
+; To delete file after sending
+;Delete File When Used=No
+; Enable MIME character encoding?
+;Mime Encoding=Yes
+; Do you really want to let everyone to send EMail using SendMess ?
+; If not, set this to Yes and fill the [Nicknames] section below
+;Restrict Email=No
+
+[Nicknames]
+; List of persons who are authorized to send Mails.
+; This list applies only if Restrict Email=Yes
+;someone=someone@somewhere.com
+
+[CGI]
+; The HTML code used in the header of CGI response.
+; HTML xxx=Text         (less than 1000 characters)
+; HTML xxx=@HTML_File   (put this file in current directory)
+;HTML Head Get=<html><body leftmargin=20 topmargin=10><H1>EMail Consultation</H1><hr><br>
+;HTML End Get=<br><hr></body></html>
+;HTML Head Get=@MailHeadGet.htm
+;HTML End Get=@MailEndGet.htm
+;HTML Head Send=<html><body leftmargin=20 topmargin=10><H1>EMail Consultation</H1><hr><br>
+;HTML End Send=<br><hr></body></html>
+;HTML Head Send=@MailHeadSend.htm
+;HTML End Send=@MailEndSend.htm
+
+[Host conversion]
+; You can use this section to force GetMess to use an alterative POP3 server name.
+; This is usefull to solve some DNS or proxy problems
+;mail.mailserver.com=localhost
+
+
+;-------------------------------------------------------------
+; DEBUG
+;-------------------------------------------------------------
+; If you want to control debug level and debug output,
+; put the following sections in a file called LogMsg.ini
+; in the same directory than the binary to execute
+
+[ErrorLevel]
+Default=9
+GetMess.log=9
+SendMess.log=9
+
+[LogFile]
+GetMess.log=GetMess.log
+SendMess.log=SendMess.log

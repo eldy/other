@@ -1,0 +1,9 @@
+depends=1.051
+longdesc=View your quotas and those of your groups on all filesystems for which they are enabled.
+os_support=solaris redhat-linux mandrake-linux slackware-linux debian-linux suse-linux united-linux hpux freebsd open-linux unixware turbo-linux openbsd corel-linux cobalt-linux msc-linux generic-linux gentoo-linux netbsd macos trustix-linux
+desc=Disk Quotas
+version=1.051
+usermin=1
+desc_el=Quotas Δίσκων
+name=Quotas
+desc_fr=Quotas Disques

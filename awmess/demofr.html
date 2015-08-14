@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.0//EN">
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Interface Web de Consultation/Envoi mail</title>
+</head>
+
+<script language="JavaScript1.1">
+window.defaultStatus="Interface Web de consultation/envoi de mails"
+</script>
+
+
+<body>
+<br>
+
+<!-- Reception mail -->
+<center>
+<H6>CONSULTATION MESSAGERIE</H6>
+</center>
+
+<script language="Javascript1.1">
+if (window.location.hostname=="") {
+	alert("Cette page faisant appel à un programme CGI, elle ne peut fonctionner que accédée via un serveur Web, ce qui n'est pas le cas actuellement.");
+}
+
+document.writeln('<form action="/cgi-bin/GetMess/GetMess.exe" method="POST" ENCTYPE="application/x-www-form-urlencoded">');
+</script>
+<table border="2" cellpadding="15" cellspacing="0" align="center" width="96%">
+<tr><td>
+    <input type="hidden" name="LANG" value="French">
+    <input type="hidden" name="ACTION" value="L">
+	<table border="0" cellspacing="1" width="100%" align="center">
+    <tr>
+    	<td valign="top" width="150" nowrap>Login:</td>
+        <td valign="top" colspan=2><input type="text" size="32" name="USER"></td>
+    </tr>
+    <tr>
+        <td valign="top" width="150" nowrap>Mot de passe:</td>
+        <td valign="top" colspan=2><input valign="top" type="password" size="32" name="PASSWORD">&nbsp;</td>
+    </tr>
+    <tr>
+        <td valign="top" width="150" nowrap>Serveur POP:</td>
+        <td valign="top" colspan=2 nowrap><input type="text" size="32" name="HOST" value="pop.mysever.com"></td>
+    </tr>
+    <tr>
+        <td valign="top" width="150" nowrap><img src="../images/mailget.gif" width="128" height="42"></td>
+		<td valign="top" align="left" colspan="2" nowrap>
+		<input type="submit" value="Consulter Message">
+        </td>
+    </tr>
+    </table>
+</td></tr>
+</table>
+<!--
+<font size=1><b><u>Remarque :</u></b> Le courrier consulté est laissé sur le serveur. Par ailleurs, l'accès à votre compte n'est pas sécurisé...</font>
+-->
+</form>
+
+
+
+<br><br>
+
+
+<!-- Rubrique envoi message -->
+<center>
+<H6>ENVOI MESSAGE</H6>
+</center>
+
+
+<script language="Javascript1.1">
+document.writeln('<form action="/cgi-private/SendMess/SendMess.exe" method="POST" ENCTYPE="application/x-www-form-urlencoded">');
+</script>
+<table border="2" cellpadding="15" cellspacing="0" align="center" width="96%">
+<tr><td>
+	<table border="0" cellspacing="1" width="100%" align="center">
+        <tr>
+            <td  height=28 valign="top" width="150" nowrap>De:</td>
+			<td>
+		    <input type="text" name="FROM" value="">
+		    <input type="hidden" name="LANG" value="French">
+			<script language="Javascript1.1">
+			document.writeln('<input type="hidden" name="HOST" value="smtp.wanadoo.fr">');
+			</script>
+			</td>
+        </tr>
+        <tr>
+            <td valign="top" width="150" nowrap>Pour:</td>
+            <td valign="top" colspan=2 nowrap><input type="text" size="32" MAXLENGTH=48 name="RCPT"><font size="2"><i>&nbsp;(Ex: destinataire@server.com)</i></font></td>
+        </tr>
+        <tr>
+            <td valign="top" width="150" nowrap>Sujet:</td>
+            <td valign="top" colspan=2 nowrap><input type="text" size="32" MAXLENGTH=64 name="SUBJECT">&nbsp;</td>
+        </tr>
+        <tr>
+            <td valign="top" width="150" nowrap>Message:</td>
+            <td valign="top" colspan="2"><textarea name="MESSAGE" rows="3" cols="50"></textarea></td>
+        </tr>
+        <tr>
+			<td valign="top" width="150" nowrap><img src="../images/mailsend.gif" width="128" height="42"></td>
+			<td valign="top" align="left" colspan=2 nowrap><input type="submit" value=" Envoyer Message "></td>
+        </tr>
+    </table>
+</td></tr>
+</table>
+<!--
+<font size=1><b><u>Remarque :</u></b> Il n'est pas possible de joindre des fichiers dans la version actuelle de ce service.</font>
+-->
+</form>
+
+</body>
+</html>

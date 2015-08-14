@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<rdf:RDF
+ xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+ xmlns="http://purl.org/rss/1.0/"
+ xmlns:taxo="http://purl.org/rss/1.0/modules/taxonomy/"
+ xmlns:dc="http://purl.org/dc/elements/1.1/"
+ xmlns:syn="http://purl.org/rss/1.0/modules/syndication/"
+ xmlns:admin="http://webns.net/mvcb/"
+>
+
+<channel rdf:about="">
+<title>Google News -- chat+animaux</title>
+<link></link>
+<description></description>
+<items>
+ <rdf:Seq>
+  <rdf:li rdf:resource=""http://www.cybersciences.com/cyber/4.0/2004/07/culture.asp"" />
+  <rdf:li rdf:resource=""http://www.kompass.ma/actualite/detail.php?ida=4134&amp;url=http://www.kompass.ma/&amp;menu=1&amp;src=eco&amp;niveau=1"" />
+  <rdf:li rdf:resource=""http://www.leconomiste.com/article.html?a=57011"" />
+  <rdf:li rdf:resource=""http://www.lefigaro.fr/culture/20040716.FIG0154.html"" />
+  <rdf:li rdf:resource=""http://www.paris-normandie.com/seinemaritime/rivedroite/000000124.html"" />
+  <rdf:li rdf:resource=""http://www.liberation.fr/page.php?Article=224087"" />
+  <rdf:li rdf:resource=""http://www.aniwa.com/renvoie.asp?type=1&amp;id=101821&amp;cid=109082&amp;com=1&amp;animal=0&amp;lang=1"" />
+  <rdf:li rdf:resource=""http://www.tunishebdo.com.tn/article.php?rid=6&amp;id=14183"" />
+  <rdf:li rdf:resource=""http://www.bienpublic.com/region/20040712.BPA0231.html?0722"" />
+ </rdf:Seq>
+</items>
+</channel>
+
+<item rdf:about=""http://www.cybersciences.com/cyber/4.0/2004/07/culture.asp"">
+<title>Voyager au long des pages</title>
+<link>"http://www.cybersciences.com/cyber/4.0/2004/07/culture.asp"</link>
+<description>CyberSciences -: phrase du livre Bêtes de science m&#39;a un peu fait tiquer: les animaux de laboratoire ... À quand un livre sur les découvertes dues au chat, au chien et au singe? ... </description>
+</item>
+
+<item rdf:about=""http://www.kompass.ma/actualite/detail.php?ida=4134&amp;url=http://www.kompass.ma/&amp;menu=1&amp;src=eco&amp;niveau=1"">
+<title>El Jadida: Attention, la rage canine sévit toujours!</title>
+<link>"http://www.kompass.ma/actualite/detail.php?ida=4134&amp;url=http://www.kompass.ma/&amp;menu=1&amp;src=eco&amp;niveau=1"</link>
+<description>Kompass.ma -: C’est une rage essentiellement rurale et suburbaine transmise par le chien et accessoirement par le chat et d’autres animaux. ... </description>
+</item>
+
+<item rdf:about=""http://www.leconomiste.com/article.html?a=57011"">
+<title>El Jadida: Attention, la rage canine sévit toujours!</title>
+<link>"http://www.leconomiste.com/article.html?a=57011"</link>
+<description>L'Économiste -: C’est une rage essentiellement rurale et suburbaine transmise par le chien et accessoirement par le chat et d’autres animaux. ... </description>
+</item>
+
+<item rdf:about=""http://www.lefigaro.fr/culture/20040716.FIG0154.html"">
+<title>Adieu veaux, vaches, cochons...</title>
+<link>"http://www.lefigaro.fr/culture/20040716.FIG0154.html"</link>
+<description>Le Figaro -: Antiquité. Tous ces animaux se vendaient. ... Tuileries. Le dernier à entrer dans les maisons fut le chat, mal vu depuis le Moyen-Age. ... </description>
+</item>
+
+<item rdf:about=""http://www.paris-normandie.com/seinemaritime/rivedroite/000000124.html"">
+<title>Une ville en fête</title>
+<link>"http://www.paris-normandie.com/seinemaritime/rivedroite/000000124.html"</link>
+<description>Paris Normandie -: Des animaux géants tels un chat botté, une vache, un lapin nommé Jannot et un horrible singe ont déambulé entre les différentes animations pour ... </description>
+</item>
+
+<item rdf:about=""http://www.liberation.fr/page.php?Article=224087"">
+<title>Sobel brosse bien le &lt;b>chat&lt;/b>-chef de Brecht</title>
+<link>"http://www.liberation.fr/page.php?Article=224087"</link>
+<description>Libération -: ici Un homme est un homme, un dessinateur d&#39;Hollywood aurait pu tirer un dessin animé, avec des animaux pour personnages. L&#39;histoire d&#39;un chat qui sort de ... </description>
+</item>
+
+<item rdf:about=""http://www.aniwa.com/renvoie.asp?type=1&amp;id=101821&amp;cid=109082&amp;com=1&amp;animal=0&amp;lang=1"">
+<title>&lt;img src=http://news.google.com/news?imgefp=YKjiog02PIIJ&amp;imgurl=www.aniwa.com/Home/Images/1/1039/109082.jpg width=79 height=70 alt="" border=1>&lt;/a>&lt;/td>&lt;td>&lt;a href="http://www.aniwa.com/renvoie.asp?type=1&amp;id=101821&amp;cid=109082&amp;com=1&amp;animal=0&amp;lang=1">&lt;b>Chat&lt;/b>-rivari à Guernesey !</title>
+<link>"http://www.aniwa.com/renvoie.asp?type=1&amp;id=101821&amp;cid=109082&amp;com=1&amp;animal=0&amp;lang=1"</link>
+<description>Aniwa -: lettre les conseils de la Société de Protection des Animaux de Guernesey ... 10 appels téléphoniques par jour d’amoureux du chat souhaitant désespérement ... </description>
+</item>
+
+<item rdf:about=""http://www.tunishebdo.com.tn/article.php?rid=6&amp;id=14183"">
+<title>&lt;img src=http://news.google.com/news?imgefp=iQ-F1RPFafUJ&amp;imgurl=www.tunishebdo.com.tn/data/1534/chien1-71204.jpg width=79 height=63 alt="" border=1>&lt;/a>&lt;/td>&lt;td>&lt;a href="http://www.tunishebdo.com.tn/article.php?rid=6&amp;id=14183">L’Egypte paradis des canins</title>
+<link>"http://www.tunishebdo.com.tn/article.php?rid=6&amp;id=14183"</link>
+<description>Tunis Hebdo -: Pas très loin, les propriétaires des animaux domestiques privilégiés mènent une véritable course : qui sera accompagné du meilleur chat ou chien ? ... </description>
+</item>
+
+<item rdf:about=""http://www.bienpublic.com/region/20040712.BPA0231.html?0722"">
+<title>Campagne contre les abandons</title>
+<link>"http://www.bienpublic.com/region/20040712.BPA0231.html?0722"</link>
+<description>Bien Public -: Ils oublient un peu vite qu&#39;un chien ou un chat perd toute joie de vivre loin de ses maîtres et de son environnement familier. Les animaux accueillis dans les ... </description>
+</item>
+
+</rdf:RDF>

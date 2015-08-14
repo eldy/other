@@ -1,0 +1,57 @@
+WEBMASTER-EXM
+03/02/2003 19.00
+
+Envoyé par :      Surveillance EXM
+
+
+Pour : WEBMASTER-EXM/F/EDFGDF/FR@EDFGDF
+cc :    (ccc : Laurent DESTAILLEUR/E/EDFGDF/FR)
+Objet :     Votre consommation Internet excessive
+
+Pour des raisons de confidentialité, les destinataires importants de ce
+message sont en ccc.
+
+
+            Bonjour,
+
+            Sur les 3 dernières semaines, le compteur de volume de connexion
+            à Internet de votre compte a enregistré une consommation très
+            exagérée de données supérieure à 125 Mega-octets par semaine. Ce
+            qui correspond à une activité Internet de plusieurs heures.
+            Comparé aux 32 heures de travail exigée par notre statut en vigueur,
+            cela représente une consommation inquiétante quand à la conscience
+            professionnelle mise en oeuvre dans votre mission de service
+            publique.
+
+            Ce volume relativement important est, de plus, de nature à
+            perturber le bon fonctionnement de la connexion à Internet de nos
+            Etablissements et avoir des conséquences sur la qualité perçue
+            par les autres utilisateurs.
+
+            Si ce dépassement est justifié professionnellement, nous vous
+            demandons de nous le faire savoir en répondant à ce message et
+            nous vous remercions à l'avance pour votre compréhension.
+
+            Dans le cas contraire, nous vous demandons de limiter
+            sérieusement votre usage d'Internet.
+
+            En cas de dépassement répété de ce volume de consommation, et
+            sans réponse de votre part, nous nous verrions obligés de
+            contacter le responsable SI de votre unité, afin de prendre les
+            mesures qui s'impose sur votre cas.
+
+            Cordialement,
+
+
+
+               L'opérateur de l'accès Internet de la Direction Informatique
+               et Télécoms
+
+
+
+
+   Nota : les informations nominatives ayant permis de constater ce volume
+   ont été enregistrées conformément à la loi du 6 janvier 1978, et sont
+   consultables sur le site Web à l'adresse http://www-admin.der.edf.fr ou
+   http://130.98.248.11
+

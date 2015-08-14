@@ -1,0 +1,6 @@
+name=phpmyadmin
+category=
+desc=MySQL Database (phpMyAdmin)
+desc_fr=Base de données MySQL (phpMyAdmin)
+usermin=1
+long_desc=This module allows you to replace the "MySQL" Webmin module by phpMyAdmin. It adds a link in Webmin menu to your phpMyAdmin home. You can then, if you want, disable the "MySQL" module (to avoid having two "MySQL" entries in Webmin menu)

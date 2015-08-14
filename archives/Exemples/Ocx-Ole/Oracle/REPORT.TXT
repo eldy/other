@@ -1,0 +1,62 @@
+Oracle Objects for OLE Beta program problem report form.
+
+CUSTOMER DETAILS
+-----------------
+Customer Contact Name			: (last)		(first)
+Customer Contact Phone			: 
+Customer Contact Email			:
+Customer Address (optional)		:
+					:
+Customer Contact Country/Timezone	:
+Best time to contact by phone		:
+Customer Defined Priority 		:		(1. Complete loss of service)
+							(2. Severe loss of service)
+							(3. Minimal loss of service)
+							(4. Minor error/enhancement)
+
+HARDWARE DETAILS
+-----------------
+Processor (386,486,Pentium)	:	Speed (e.g. 90MHz)	:
+Memory in MB			:
+
+SOFTWARE DETAILS
+-----------------
+Operating System (NT, Win95, Win3.1, WFW)			:
+Application or development tool (e.g. Visual Basic, Borland C++):
+Application or development tool version number			:
+
+
+DESCRIPTION OF PROBLEM
+-----------------------
+Brief Description (e.g. GPF when adding a table parameter)	:
+:
+Operating system messages (e.g. MYPROG caused a General protection fault in module OIP20.DLL at 0018035D)
+:
+Oracle error message (e.g. OIP-4121 Invalid Bookmark.)
+:
+Long description of problem
+:
+:
+:
+:
+:
+
+OPTIONAL
+---------
+Please use the space below to provide any extra information you feel is important.
+
+
+
+
+
+
+
+Do you have a workaround?
+Do you have a code sample?
+
+
+
+
+
+
+

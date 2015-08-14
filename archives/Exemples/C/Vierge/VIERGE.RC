@@ -1,0 +1,50 @@
+// Fichier des ressources
+
+#include <windows.h>
+#include "testdll.h"
+
+
+icon1 ICON "testdll.ico"
+
+
+MENU_1 MENU
+{
+ POPUP "&Fichier"
+ {
+  MENUITEM "&Nomdumenu", MENU_NOMDUMENU
+  MENUITEM SEPARATOR
+  MENUITEM "&Quitter", MENU_QUITTER
+ }
+
+ POPUP "&?"
+ {
+  MENUITEM "&A propos de ...", MENU_APROPOS
+ }
+
+}
+
+
+
+APROPOS DIALOG LOADONCALL FIXED DISCARDABLE 12, 26, 258, 199
+STYLE WS_OVERLAPPED | WS_VISIBLE | WS_CAPTION | WS_THICKFRAME
+CAPTION "A propos de ..."
+FONT 8, "MS Sans Serif"
+{
+ DEFPUSHBUTTON "&Ok", IDC_OK, 101, 170, 55, 19, BS_DEFPUSHBUTTON | WS_GROUP | WS_TABSTOP
+ CTEXT "XXX", -1, 78, 7, 102, 9
+ CTEXT "\xA9 1994", -1, 98, 51, 60, 10
+ ICON "icon1", -1, 121, 29, 16, 16
+ CTEXT "Version 1.0", -1, 108, 17, 42, 9
+ RTEXT "386 protégé", IDC_WINDOWS_MODE, 178, 76, 61, 8, SS_RIGHT | NOT WS_GROUP
+ RTEXT "xxxxxxx octets", IDC_MEMOIRE_LIBRE, 181, 84, 58, 7, SS_RIGHT | NOT WS_GROUP
+ LTEXT "Mode Windows :", -1, 130, 76, 55, 8, NOT WS_GROUP
+ LTEXT "Mémoire libre :", -1, 130, 84, 62, 8, NOT WS_GROUP
+ LTEXT "Ressources libres :", -1, 130, 92, 65, 8, NOT WS_GROUP
+ RTEXT "xx%", IDC_RESSOURCES_LIBRES, 189, 92, 50, 8, SS_RIGHT | NOT WS_GROUP
+ CONTROL "", -1, "static", SS_BLACKRECT | WS_CHILD | WS_VISIBLE, 14, 69, 227, 1
+ CONTROL "", -1, "static", SS_BLACKFRAME | WS_CHILD | WS_VISIBLE, 14, 106, 227, 1
+ CONTROL "", -1, "static", SS_BLACKFRAME | WS_CHILD | WS_VISIBLE, 15, 158, 224, 1
+}
+
+
+

@@ -1,0 +1,82 @@
+*************************************************************************
+* UTILKIT V3.0
+* The Shareware utilities pack for DOS  -  Laurent Destailleur
+*************************************************************************
+
+Utilkit is a set of several utilities for DOS.
+Utilkit are C programs compiled on WIN32 with GCC (Works with VC++)
+some utilities can be compile on Linux/Unix (Tested with GCC for Linux and Aix)
+
+
+Some utilities and sources are on registered version only (see the end of the file)
+
+
+
+Here are the descriptions of the standard utilities included in Shareware version:
+
+***** DISK UTILITIES *********
+
+TurboDsk.exe    TURBODISK fasts your Floppy Disk Drive (to put in Autoexec.bat)
+DiskInfo.exe    DISKINFO shows the details of your hard disk system areas.
+                Master boot, Partitions table, Sector boot, FAT, the root
+                directories entries, etc...
+Clear.exe       Clear your hard disk from all rubish files.
+
+
+***** SYSTEM UTILITIES *******
+
+D.exe           Replaces the Dir command (Dir with file attributs showed).
+Bat2Csh.exe     Transfrom a Dos Batch file .bat into a Unix Shell file.
+Boot.exe        Makes a cold or warm boot (With protection to prevent booting from a Dos session in Windows)
+Datetime        Shows date and time with milliseconds (For use in batch files).
+Delete.exe      An improved del command (allows recursive subdirectory del).
+Filetime.exe    Changes Date/Hour of files.
+Print2.exe      Print2 sends a file to your printer returning an error code (And don't ask Retry,Ignore if error, unlike the DOS 'print' command)
+UpDate.exe      Updates the content of a directory with the content of an another directory.
+
+
+***** FILE UTILITIES *********
+
+Split.exe       Splits a file in several pieces.
+Merge.exe       Reconstructs a file from several pieces (used with Split).
+
+UUencode.exe    Encodes a binary file with the UU method (To send binary files by Mail)
+UUdecode.exe    Decodes a UUencoded file into its original form.
+
+Dos2unix        Converts a Dos text file into a Unix text file.
+Unix2dos        Converts a Unix text file into a Dos text file.
+
+
+***** COMPRESS ***********
+
+Huffman.exe     HUFFMAN compresses a file, just using the Huffman algorithm.
+Lzw.exe         LZW compresses a file, just using the Lempel Ziv Welch algorithm.
+
+
+***** MISCELLANOUS ***********
+
+Cpp2CCom.exe    CPP2CCOM changes Comments of a C++ file to C file's comments.
+Eval.exe        Evaluates a mathematical expression (Ex: eval 5+cos(3/7*PI) )
+Wc.exe          A word/line/character counter (can be used with pipes)
+
+
+
+
+***** REGISTERED VERSION ONLY *****
+
+SendMess.exe	To send mails on Internet from your command line (can also be used as CGI from HTML form)
+GetMess.exe	To get mails on Internet from your command line (can also be used as CGI from HTML form)
++ All sources of all UTILKIT utilities (C or Pascal).
+
+
+
+
+To register and receive the last version of utilkit:
+Send 10$ US or 50 FF to:
+
+Destailleur Laurent
+58 rue François Mauriac,
+78180 Montigny-le-Bretonneux.
+FRANCE.
+
+EMail: ld@writeme.com

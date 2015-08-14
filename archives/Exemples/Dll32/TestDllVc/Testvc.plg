@@ -1,0 +1,42 @@
+--------------------Configuration: Testvc - Win32 Release--------------------
+Begining build with project "D:\Exemples\Dll32\TestDllVc\Testvc.dsp", at root.
+Active configuration is Win32 (x86) Application (based on Win32 (x86) Application)
+
+Project's tools are:
+			"32-bit C/C++ Compiler for 80x86" with flags "/nologo /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /Fp".\Release/Testvc.pch" /Yu"stdafx.h" /Fo".\Release/" /Fd".\Release/" /FD /c "
+			"OLE Type Library Maker" with flags "/nologo /D "NDEBUG" /mktyplib203 /win32 "
+			"Win32 Resource Compiler" with flags "/l 0x40c /fo".\Release/Testvc.res" /d "NDEBUG" /d "_AFXDLL" "
+			"Browser Database Maker" with flags "/nologo /o".\Release/Testvc.bsc" "
+			"COFF Linker for 80x86" with flags "/nologo /subsystem:windows /incremental:no /pdb:".\Release/Testvc.pdb" /machine:I386 /out:".\Release/Testvc.exe" "
+			"Custom Build" with flags ""
+			"<Component 0xa>" with flags ""
+
+Creating temp file "C:\WINDOWS\TEMP\RSP1204.TMP" with contents </nologo /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /Fp".\Release/Testvc.pch" /Yu"stdafx.h" /Fo".\Release/" /Fd".\Release/" /FD /c 
+"D:\Exemples\Dll32\TestDllVc\TestvcDlg.cpp"
+>
+Creating command line "cl.exe @C:\WINDOWS\TEMP\RSP1204.TMP" 
+Creating command line "link.exe /nologo /subsystem:windows /incremental:no /pdb:".\Release/Testvc.pdb" /machine:I386 /out:".\Release/Testvc.exe"  .\Release\Testvc.obj .\Release\TestvcDlg.obj .\Release\StdAfx.obj .\Release\Testvc.res" 
+Compiling...
+TestvcDlg.cpp
+Linking...
+
+
+
+Testvc.exe - 0 error(s), 0 warning(s)
+--------------------Configuration: Testvc - Win32 Debug--------------------
+Begining build with project "D:\Exemples\Dll32\TestDllVc\Testvc.dsp", at root.
+Active configuration is Win32 (x86) Application (based on Win32 (x86) Application)
+
+Project's tools are:
+			"32-bit C/C++ Compiler for 80x86" with flags "/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /FR".\Debug/" /Fp".\Debug/Testvc.pch" /Yu"stdafx.h" /Fo".\Debug/" /Fd".\Debug/" /FD /c "
+			"OLE Type Library Maker" with flags "/nologo /D "_DEBUG" /mktyplib203 /win32 "
+			"Win32 Resource Compiler" with flags "/l 0x40c /fo".\Debug/Testvc.res" /d "_DEBUG" /d "_AFXDLL" "
+			"Browser Database Maker" with flags "/nologo /o".\Debug/Testvc.bsc" "
+			"COFF Linker for 80x86" with flags "/nologo /subsystem:windows /incremental:yes /pdb:".\Debug/Testvc.pdb" /debug /machine:I386 /out:".\Debug/Testvc.exe" "
+			"Custom Build" with flags ""
+			"<Component 0xa>" with flags ""
+
+
+
+
+Testvc.exe - 0 error(s), 0 warning(s)

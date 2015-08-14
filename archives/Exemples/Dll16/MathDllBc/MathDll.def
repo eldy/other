@@ -1,0 +1,14 @@
+;****************************************************
+; Fichier DEF pour création de DLL
+;****************************************************
+
+
+LIBRARY MathDll
+
+CODE PRELOAD MOVEABLE DISCARDABLE
+DATA PRELOAD SINGLE
+
+EXPORTS
+	f
+
+

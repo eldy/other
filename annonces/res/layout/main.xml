@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    
+	<WebView 
+		android:id="@+id/webview"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:visibility="gone" />
+    
+	<ImageView
+		android:id="@+id/advertising"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:background="@color/background"
+		android:scaleType="fitXY"
+		android:visibility="gone" />
+    
+	<ImageView
+		android:id="@+id/splash"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:src="@drawable/splash_logo"
+		android:scaleType="center"
+		android:background="@color/background" />
+
+</FrameLayout>

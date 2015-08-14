@@ -1,0 +1,19 @@
+body {
+	behavior: url(/csshover.htc);
+}
+div#menu ul li ul {
+	display: none;
+	position: absolute;
+	margin: 0px;
+	width: 230px;
+	top: 24px;
+	margin-left: -55px;
+	background: white;
+	border: 1px solid #333;
+	border-top: none 0px;
+	z-index: 1000;
+}
+
+div#menu {
+	width: 98%;
+}

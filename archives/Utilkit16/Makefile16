@@ -1,0 +1,88 @@
+#-----------------------------------------------#
+# Makefile generique DOS16
+#-----------------------------------------------#
+# 02/08/98      LD      Creation
+#-----------------------------------------------#
+
+# BC            3.51    Borland
+COMP=BC
+
+
+# Compilation var bc
+#-----------------------------------------------#
+ifeq "$(COMP)" "BC"
+CPP=c:/langages/bc/bin/bcc.exe
+RSC=c:/langages/bc/bin/bcres.exe
+LINK=c:/langages/bc/bin/bcc.exe
+CPP_PROJ=-c -Ic:/langages/bc/include -Id:/sources/include
+LINK_FLAGS=-Lc:/langages/bc/lib
+SEPARL=-o
+SEPARC=-o
+MODELS=-ms
+MODELL=-ml
+endif
+
+
+# Liste des executables
+#-----------------------------------------------#
+EXEJ=Bat2csh.exe
+EXEH=Boot.exe
+EXEC=Clear.exe
+EXEB=CrackZip.exe
+EXEF=D.exe
+EXEA=Delete.exe
+EXED=DiskInfo.exe
+EXEI=Print2.exe
+EXEE=TurboDsk.exe
+EXEG=Update.exe
+
+# Liste des objets pour chaque executbale
+#-----------------------------------------------#
+OBJEXEA=Delete.obj
+OBJEXEB=CrackZip.obj
+OBJEXEC=Clear.obj
+OBJEXED=DiskInfo.obj
+OBJEXEE=TurboDsk.obj
+OBJEXEF=D.obj
+OBJEXEG=Update.obj
+OBJEXEH=Boot.obj
+OBJEXEI=Print2.obj
+OBJEXEJ=Bat2csh.obj
+
+
+# Liste des taches a accomplir
+#----------------------------------------------#
+ALL :   hardware ansi $(EXEA) $(EXEB) $(EXEC) $(EXED) $(EXEE) \
+	$(EXEF) $(EXEG) $(EXEH) $(EXEI) $(EXEJ) $(EXEK) $(EXEL)
+
+CLEAN :
+	-@erase "*.obj"
+
+
+
+# Regle construction exe (Un exe / obj)
+#---------------------------------------------------#
+%.exe : %.obj
+	@echo Link de $(@)
+	$(LINK) $(MODELS) $(LINK_FLAGS) $(@:.exe=.obj) hardware.obj ansi.obj
+	@echo -----
+
+# Regle construction exe (Chaque exe a une liste de obj)
+#---------------------------------------------------#
+#$(EXEA) : $(OBJEXEA)
+#        @echo Link de $(@)
+#        $(LINK) $(MODELS) $(LINK_FLAGS) $(SEPARL) $(@) $(@:.exe=.obj)
+#        @echo -----
+
+# Regle construction obj
+#---------------------------------------------------#
+%.obj : $(@:.obj=.c)        
+	@echo Compilation de $(@:.obj=.c) en $(@)
+	$(CPP) $(MODELS) $(CPP_PROJ) d:/dev/Utilkit/$(@:.obj=.c)
+
+hardware:
+	$(CPP) $(CPP_PROJ) -ohardware.obj d:/sources/src/hardware.c
+
+ansi:
+	$(CPP) $(CPP_PROJ) -oansi.obj d:/sources/src/ansi.c
+	

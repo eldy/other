@@ -1,0 +1,12 @@
+category=login
+longdesc=Change your password, either by calling PAM or running the passwd command.
+desc=Change Password
+desc_es=Cambiar clave de acceso
+usermin=1
+desc_de=Passwort &auml;ndern
+name=Changepass
+desc_ja_JP.euc=₯Ρ₯Ή₯ο‘Ό₯Ι€ΞΚΡΉΉ
+depends=proc 1.051
+version=1.051
+desc_el=Αλλαγή Κωδικού
+desc_fr=Changement Mot de passe

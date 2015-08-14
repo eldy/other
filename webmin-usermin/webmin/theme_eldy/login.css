@@ -1,0 +1,95 @@
+<STYLE TYPE="TEXT/CSS">
+<!--
+body {
+	background: url(images/background.gif) top left no-repeat #476DAB;	
+	font-family: 'Trebuchet MS', 'Bitstream Vera Sans', Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	margin-top: 60px;
+}
+
+hr {
+	display: none;
+}
+h3 {
+	display: none;
+}
+
+form {
+	background: url(images/loginbackground.gif) top left no-repeat;
+	width: 320px;
+	padding-top: 132px;
+	margin: auto;
+}
+table {
+	width: 316px;
+	padding: 0px;
+	border: 0px none;
+	background: none;
+}
+table tr {
+	background: none;
+}
+table tr td {
+	font-size: 1px;
+	color: white;
+	border: 0px;
+}
+table tr td b {
+	font-weight: normal;
+	font-size: 12px;
+	color: black;
+}
+table tr.eldy_title td {
+	text-align: center;
+	padding-bottom: 15px;
+	background: none;
+}
+table tr.eldy_title td b {
+	font-weight: bold;
+	font-size: 16px;
+}
+INPUT {
+	visibility: visible;
+}
+
+
+INPUT {
+	background: white;
+	font-family: 'Trebuchet MS', 'Bitstream Vera Sans', Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 12px;	
+	color: #070B2C;
+}
+INPUT[type=checkbox] {
+	visibility: hidden;
+}
+INPUT[type=submit] {
+	border: 1px solid #666;
+	padding: 4px;
+	margin: 0px;
+	margin-right: 30px;
+	padding-top:1px;
+	padding-bottom: 1px;
+	font-weight: bold;
+	background: url(images/button.gif) repeat-x top left white;
+}
+INPUT[type=reset] {
+	border: 1px solid #666;
+	padding: 4px;
+	padding-top:1px;
+	padding-bottom: 1px;
+	margin: 0px;
+	margin-left: 30px;
+	font-weight: bold;
+	background: url(images/button.gif) repeat-x top left white;
+}
+INPUT[type=submit]:hover {
+	background: url(images/button_hover.gif) repeat-x top left white;
+}
+INPUT[type=reset]:hover {
+	background: url(images/button_hover.gif) repeat-x top left white;
+}
+
+
+-->
+</STYLE>
+

@@ -1,0 +1,72 @@
+--------------------Configuration: Hooker - Win32 Release--------------------
+Begining build with project "D:\Dev\SecretKeyLogger\Sources\Hooker\Hooker.dsp", at root.
+Active configuration is Win32 (x86) Application (based on Win32 (x86) Application)
+
+Project's tools are:
+			"32-bit C/C++ Compiler for 80x86" with flags "/nologo /MD /W3 /GX /O1 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_AFXDLL" /Fp"Release/Hooker.pch" /YX /Fo"Release/" /Fd"Release/" /FD /c "
+			"OLE Type Library Maker" with flags "/nologo /D "NDEBUG" /mktyplib203 /o NUL /win32 "
+			"Win32 Resource Compiler" with flags "/l 0x409 /fo"Release/hooker.res" /d "NDEBUG" /d "_AFXDLL" "
+			"Browser Database Maker" with flags "/nologo /o"Release/Hooker.bsc" "
+			"COFF Linker for 80x86" with flags "wsock32.lib kernel32.lib user32.lib advapi32.lib shell32.lib /nologo /subsystem:windows /incremental:no /pdb:"Release/Hooker.pdb" /machine:I386 /out:"Release/Hooker.exe" "
+			"Custom Build" with flags ""
+			"<Component 0xa>" with flags ""
+
+Creating temp file "C:\TMP\RSP8F.tmp" with contents </nologo /MD /W3 /GX /O1 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_AFXDLL" /Fp"Release/Hooker.pch" /YX /Fo"Release/" /Fd"Release/" /FD /c 
+"D:\Dev\SecretKeyLogger\Sources\Hooker\common.cpp"
+"D:\Dev\SecretKeyLogger\Sources\Hooker\logfunc.cpp"
+"D:\Dev\SecretKeyLogger\Sources\Hooker\main.cpp"
+>
+Creating command line "cl.exe @C:\TMP\RSP8F.tmp" 
+Creating temp file "C:\TMP\RSP90.tmp" with contents <wsock32.lib kernel32.lib user32.lib advapi32.lib shell32.lib /nologo /subsystem:windows /incremental:no /pdb:"Release/Hooker.pdb" /machine:I386 /out:"Release/Hooker.exe" 
+.\Release\common.obj
+.\Release\logfunc.obj
+.\Release\lzw.obj
+.\Release\main.obj
+.\Release\hooker.res>
+Creating command line "link.exe @C:\TMP\RSP90.tmp" 
+Compiling...
+common.cpp
+logfunc.cpp
+main.cpp
+Linking...
+
+
+
+Hooker.exe - 0 error(s), 0 warning(s)
+--------------------Configuration: Hooker - Win32 Debug--------------------
+Begining build with project "D:\Dev\SecretKeyLogger\Sources\Hooker\Hooker.dsp", at root.
+Active configuration is Win32 (x86) Application (based on Win32 (x86) Application)
+
+Project's tools are:
+			"32-bit C/C++ Compiler for 80x86" with flags "/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /FR"Debug/" /Fp"Debug/Hooker.pch" /YX /Fo"Debug/" /Fd"Debug/" /FD /c "
+			"OLE Type Library Maker" with flags "/nologo /D "_DEBUG" /mktyplib203 /o NUL /win32 "
+			"Win32 Resource Compiler" with flags "/l 0x419 /fo"Debug/hooker.res" /d "_DEBUG" /d "_AFXDLL" "
+			"Browser Database Maker" with flags "/nologo /o"Debug/Hooker.bsc" "
+			"COFF Linker for 80x86" with flags "wsock32.lib kernel32.lib user32.lib advapi32.lib shell32.lib /nologo /subsystem:windows /incremental:yes /pdb:"Debug/Hooker.pdb" /debug /machine:I386 /out:"Debug/Hooker.exe" /pdbtype:sept "
+			"Custom Build" with flags ""
+			"<Component 0xa>" with flags ""
+
+Creating temp file "C:\TMP\RSP91.tmp" with contents </nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /FR"Debug/" /Fp"Debug/Hooker.pch" /YX /Fo"Debug/" /Fd"Debug/" /FD /c 
+"D:\Dev\SecretKeyLogger\Sources\Hooker\common.cpp"
+"D:\Dev\SecretKeyLogger\Sources\Hooker\logfunc.cpp"
+"D:\Dev\SecretKeyLogger\Sources\Hooker\main.cpp"
+>
+Creating command line "cl.exe @C:\TMP\RSP91.tmp" 
+Creating temp file "C:\TMP\RSP92.tmp" with contents <wsock32.lib kernel32.lib user32.lib advapi32.lib shell32.lib /nologo /subsystem:windows /incremental:yes /pdb:"Debug/Hooker.pdb" /debug /machine:I386 /out:"Debug/Hooker.exe" /pdbtype:sept 
+.\Debug\common.obj
+.\Debug\logfunc.obj
+.\Debug\lzw.obj
+.\Debug\main.obj
+.\Debug\hooker.res>
+Creating command line "link.exe @C:\TMP\RSP92.tmp" 
+Compiling...
+main.cpp
+common.cpp
+logfunc.cpp
+Linking...
+Creating command line "bscmake.exe /nologo /o"Debug/Hooker.bsc"  .\Debug\common.sbr .\Debug\logfunc.sbr .\Debug\lzw.sbr .\Debug\main.sbr" 
+Creating browse info file...
+
+
+
+Hooker.exe - 0 error(s), 0 warning(s)

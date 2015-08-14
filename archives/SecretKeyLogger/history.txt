@@ -1,0 +1,61 @@
+
+              Hooker, the intelligent trojan keylogger
+              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                            (history)
+
+
+1.0
+~~~
+ Just a experimental program with very weak possibilities (just a 
+simple keylog). Was completely rewritten in the next versions.
+
+2.0
+~~~
+ Now it sends a keylog. Added ripping of cached passwords (*.pwl). 
+Installs in registry to the  user-defined path.  It is possible to
+define max size of a  log-file,  after which Hooker  recreates it. 
+Added  keylog of  windows  with pre-defined words in title.  Added 
+self-destructing feature.
+
+2.1
+~~~
+ Added sending of log after overflow.
+
+2.2 beta 1
+~~~~~~~~~~
+ Fixed  huge  bug in keylogging  -  hook-function must be in  DLL!
+Troyan became much stable. Added feature of http-files download.
+
+2.2 beta 2
+~~~~~~~~~~
+ Fixed bug in function which adds system dates.
+
+2.3 beta 1..4
+~~~~~~~~~~~~~
+ Added detection  of  a  RAS-connections.  Fixed  bug in  using of
+critical sections - sometimes there was conflicts of threads.  Now
+keylogging DLL is packed by LZW. Some minor bugs fixed.
+
+2.3 beta 5
+~~~~~~~~~~
+ Fixed bug  with sending of keylog.  If in window press only  ".",
+troyan  wasn't  able to send  mail  preperly  (Hooker simply flood 
+mailbox with big amount of messages).
+
+2.3 beta 6
+~~~~~~~~~~
+ Little changes in  sendmail-procedure.  Fixed unpleasant feature:
+Hooker didn't start on machine without rasapi32.dll - for example,
+on WinNT, which is not using Dial-Up Networking.  Now, if this dll
+is not present Hooker simply do not detect RAS-connections.
+
+2.4
+~~~
+ No more betas! It's a release.
+ Fixed  little bug  in  username and  hostname  detection. Added a
+couple of features:
+ full keylog:  if not checked, Hooker will log only windows, where
+was keystrokes.
+ advanced log: if not checked, Hooker will not log extended keys
+(such as "Shift", "Alt" etc).
+ Also fixed bug in connection by IP.

@@ -1,0 +1,8 @@
+category=mail
+depends=1.051
+longdesc=Set up and configure SpamAssassin to filter email sent to your account.
+desc=SpamAssassin Mail Filter
+version=1.051
+usermin=1
+name=SpamAssassin
+desc_fr=Filtre Anti-Spam Spamassassin

@@ -1,0 +1,17 @@
+;****************************************************
+; Fichier DEF pour création de DLL
+;****************************************************
+
+
+LIBRARY InOut
+
+CODE PRELOAD MOVEABLE DISCARDABLE
+DATA PRELOAD SINGLE
+
+EXPORTS
+	InByte
+   OutByte
+   InWord
+   OutWord
+
+

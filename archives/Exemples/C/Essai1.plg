@@ -1,0 +1,15 @@
+--------------------Configuration: Essai1 - Win32 Debug--------------------
+Begining build with project "D:\Dev\Divers\C\Essai1.dsp", with item "Essai1.c"
+Active configuration is Win32 (x86) Console Application (based on Win32 (x86) Console Application)
+
+
+Creating temp file "C:\TMP\RSP88.tmp" with contents </nologo /MLd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /Fp"Debug/Essai1.pch" /YX /Fo"Debug/" /Fd"Debug/" /FD /c 
+"D:\Dev\Divers\C\Essai1.c"
+>
+Creating command line "cl.exe @C:\TMP\RSP88.tmp" 
+Compiling...
+Essai1.c
+
+
+
+Essai1.obj - 0 error(s), 0 warning(s)

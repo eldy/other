@@ -1,0 +1,13 @@
+desc_nl=Gebruikers details
+category=login
+longdesc=Change your Unix real name, office, phone numbers and shell.
+os_support=slackware-linux redhat-linux mandrake-linux debian-linux suse-linux united-linux open-linux turbo-linux corel-linux cobalt-linux msc-linux generic-linux freebsd netbsd openbsd gentoo-linux trustix-linux
+desc=Change User Details
+desc_de=&Auml;ndere Benutzer&#45;Details
+usermin=1
+name=CHFN
+desc_ja_JP.euc=₯ζ‘Ό₯Ά‘ΌΎάΊΩ€ΞΚΡΉΉ
+depends=1.051
+version=1.051
+desc_el=Αλλαγή Στοιχείων Χρήστη
+desc_fr=Infos utilisateurs
