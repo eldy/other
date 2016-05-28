@@ -31,7 +31,7 @@ local $smart_time = sprintf("%04d-%02d-%02d %02d:%02d",$nowyear,$nowmonth,$nowda
 
 # Redirect if the user has only one module
 @modules = &get_available_module_infos()
-	if (! @modules));
+	if (! @modules);
 if (@modules == 1 && $gconfig{'gotoone'}) {
 	&redirect("$modules[0]->{'dir'}/");
     exit;
