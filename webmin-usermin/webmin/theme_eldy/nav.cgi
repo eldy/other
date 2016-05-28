@@ -23,7 +23,7 @@ else {
 
 # Redirect if the user has only one module
 @modules = &get_available_module_infos()
-	if (!defined(@modules));
+	if (! @modules));
 if (@modules == 1 && $gconfig{'gotoone'}) {
 	&redirect("$modules[0]->{'dir'}/");
     exit;
@@ -67,7 +67,7 @@ elsif (!$cats{$in{'cat'}}) {
 
 $cssfile="<link href=\"theme_nav.css\" rel=\"stylesheet\" type=\"text/css\" />";
 
-# Anzeigen lassen des Hauptmenüs
+# Anzeigen lassen des Hauptmenï¿½s
 &PrintHeader();
 print <<EOF;
 <!doctype html public \"-//W3C//DTD HTML 3.2 Final//EN\">
