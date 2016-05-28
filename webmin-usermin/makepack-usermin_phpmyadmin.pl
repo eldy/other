@@ -16,6 +16,11 @@ $DESTI=$PREF."/Mes Sites/Web/Admin1/wwwroot/files";
 @CHOOSEDTARGET=();
 
 
+# Test we are in correct directory
+my $pwd = `pwd`;
+$pwd=~s/\n//;
+if ($pwd ne '/home/ldestailleur/git/other/webmin-usermin') { die("Must be ran from dir tools"); }
+
 # Detect OS type
 # --------------
 if ("$^O" =~ /linux/i || (-d "/etc" && -d "/var" && "$^O" !~ /cygwin/i)) { $OS='linux'; $CR=''; }
@@ -66,7 +71,7 @@ while (! $found) {
 		print "$cpt - $target\n";
 	}
 
-	# On demande de choisir le fichier à passer
+	# On demande de choisir le fichier ï¿½ passer
 	print "Choose package number (or several separated by space): ";
 	$NUM_SCRIPT=<STDIN>; 
 	chomp($NUM_SCRIPT);
@@ -95,7 +100,7 @@ else {
 }
 
 
-# Mise à jour du buildroot
+# Mise ï¿½ jour du buildroot
 #-------------------------
 
 if (! $copyalreadydone) {

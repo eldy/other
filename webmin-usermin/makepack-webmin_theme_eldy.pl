@@ -13,10 +13,8 @@ $MINOR="5";
 );
 
 
-#$PREF='E:';
-$PREF='/media/DATA';
-$SOURCE=$PREF."/Mes Developpements/webmin-usermin/webmin/$PROJECT";
-$DESTI=$PREF."/Mes Sites/Web/Admin1/wwwroot/files";
+$SOURCE="git/other/webmin-usermin/webmin/$PROJECT";
+$DESTI=$ENV{'DESTIMODULES'};		# ".../Mes Sites/Web/Admin1/wwwroot/files";
 
 $FILENAMEWBT="$PROJECT-$MAJOR.$MINOR";
 use vars qw/ $REVISION $VERSION /;
@@ -28,6 +26,20 @@ $VERSION="1.0 (build $REVISION)";
 #------------------------------------------------------------------------------
 ($DIR=$0) =~ s/([^\/\\]+)$//; ($PROG=$1) =~ s/\.([^\.]*)$//; $Extension=$1;
 $DIR||='.'; $DIR =~ s/([^\/\\])[\\\/]+$/$1/;
+
+# Test we are in correct directory
+my $pwd = `pwd`;
+$pwd=~s/\n//;
+if ($pwd ne '/home/ldestailleur/git/other/webmin-usermin') { die("Must be ran from dir tools"); }
+
+#$CURDIR="$DIR/..";
+#if ($CURDIR !~ /^\//)
+#{
+#	print "Error: Launch the script $PROG.$Extension with its full path from /.\n";
+#	print "$PROG.$Extension aborted.\n";
+#	sleep 2;
+#	exit 1;
+#}
 
 # Detect OS type
 # --------------
@@ -72,6 +84,8 @@ $BUILDROOT="$TEMP/buildroot";
 #-----------------------
 print "Makepack version $VERSION (OS $OS)\n";
 print "Building package for $PROJECT $MAJOR.$MINOR\n";
+print "Source $SOURCE\n";
+print "Desti  $DESTI\n";
 my $found=0;
 my $NUM_SCRIPT;
 while (! $found) {
@@ -82,7 +96,7 @@ while (! $found) {
 		printf(" %d - %3s    (%s)\n",$cpt,$target,"Need ".$REQUIREMENTTARGET{$target});
 	}
 
-	# On demande de choisir le fichier à passer
+	# On demande de choisir le fichier a passer
 	print "Choose one package number or several separated with space: ";
 	$NUM_SCRIPT=<STDIN>; 
 	chomp($NUM_SCRIPT);
@@ -148,9 +162,9 @@ if (! $copyalreadydone) {
 	$ret=`rm -fr "$BUILDROOT"`;
 
 	mkdir "$BUILDROOT";
-	print "Recopie de $SOURCE dans $BUILDROOT\n";
+	print "Recopie de ~/$SOURCE dans $BUILDROOT\n";
 	mkdir "$BUILDROOT";
-	$ret=`cp -pr "$SOURCE" "$BUILDROOT"`;
+	$ret=`cp -pr ~/"$SOURCE" "$BUILDROOT"`;
 
 }
 
@@ -178,7 +192,7 @@ foreach $target (keys %CHOOSEDTARGET) {
 		unlink $FILENAMEWBT.wbt;
 		print "Creation archive $FILENAMEWBT.wbt de $PROJECT\n";
 		$ret=`tar --directory="$BUILDROOT" -cvf $FILENAMEWBT.wbt $PROJECT`;
-		print "Déplacement de $BUILDROOT/$PROJECT/$FILENAMEWBT.wbt dans $DESTI/$FILENAMEWBT.wbt\n";
+		print "Dï¿½placement de $BUILDROOT/$PROJECT/$FILENAMEWBT.wbt dans $DESTI/$FILENAMEWBT.wbt\n";
 #		rename("$BUILDROOT/$PROJECT/$FILENAMEWBT.wbt","$DESTI/$FILENAMEWBT.wbt");
 		$ret=`cp -pr "$FILENAMEWBT.wbt" "$DESTI/$FILENAMEWBT.wbt"`;
 	}	
