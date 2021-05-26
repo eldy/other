@@ -24,7 +24,7 @@ $ActiveConso
 %passwords=(); %lastuse=(); %note=();
 
 
-$URL="http://www-admin.der.edf.fr/admin/consom.php?COMPTE=";
+$URL="http://domain-for-console-of-conso.fr/admin/consom.php?COMPTE=";
 $FichierSnif="";
 $FichierPassword="d:/Mes developpements/acrack/passwordsedf.txt";
 $FichierHtml="d:/Mes developpements/acrack/passwordsedf.html";
@@ -171,7 +171,7 @@ print FICHIERHTML "TD { font: 12px arial, verdana, helvetica, sans-serif; text-a
 print FICHIERHTML "//--></STYLE>";
 print FICHIERHTML "</head><body>\n";
 print FICHIERHTML "<font color=blue>Comptes et mots de passe</font><br>\n";
-print FICHIERHTML "Dernière mise à jour: ".localtime($nowtime)."<br><br>\n";
+print FICHIERHTML "DerniÃ¨re mise Ã  jour: ".localtime($nowtime)."<br><br>\n";
 
 print FICHIERHTML "<table>\n";
 print FICHIERHTML "<tr><td>Compte</td><td>Mot de passe</td><td>Derniere detection</td>";
