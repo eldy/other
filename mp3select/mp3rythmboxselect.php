@@ -86,6 +86,7 @@ function getYearFromGPT($title, $artist, $album, $apiKey) {
     return null;
 }
 
+$countall = 0;
 $countia = 0;
 
 foreach ($xml->entry as $entry) {
@@ -108,7 +109,13 @@ foreach ($xml->entry as $entry) {
         continue;
     }
 
-    print "location=".$location." date=".(int)$entry->date." year=".$year." rating=".$rating." comment=".$comment."\n";
+    $countall++;
+
+    print "#".$countall." location=".$location." date=".(int)$entry->date." year=".$year." rating=".$rating." comment=".$comment."\n";
+
+	if ($rating < 4) continue;
+    if (!preg_match('/star (4|5)/i', $comment)) continue;
+    if (preg_match('/Generiques\-TV/i', $location)) continue;
 
     if ($year == 0) {
     	print "Year not defined, we search it...\n";
@@ -122,9 +129,22 @@ foreach ($xml->entry as $entry) {
 
 			print "Found tmp=".$tmp." newdate=".$newdate."\n";
 
-			$entry->date = $newdate;
+			if ($newdate > (1900 * 365) && $newdate < (2050 * 365)) {
+				$entry->date = $newdate;
+				$year = $tmp;
+
+				$xml->asXML($xmlFileAfter);
+			} else {
+				print "Failed to get year tmp=".$tmp." newdate=".$newdate."\n";
+				print "We save the new xml file.\n";
+
+				$xml->asXML($xmlFileAfter);
+
+				die("Failed to get year\n");
+			}
 		} else {
-			print "Failed to get year, we save new xml file\n";
+			print "Failed to get year.\n";
+			print "We save the new xml file.\n";
 
 			$xml->asXML($xmlFileAfter);
 
@@ -132,12 +152,14 @@ foreach ($xml->entry as $entry) {
 		}
 
 		if ($countia > 5) {
+			print "We save the new xml file.\n";
+
 			$xml->asXML($xmlFileAfter);
+
+			$countia = 0;
 		}
     }
 
-	if ($rating < 3) continue;
-    if (!preg_match('/star (3|4|5)/i', $comment)) continue;
     if ($year < 1990 || $year > 1995) continue;
 
     // Construire le chemin de destination
